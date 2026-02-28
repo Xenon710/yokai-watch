@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La superbe soundboard de Xenon</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.2/peerjs.min.js"></script>
+<style>
+/* ── PIXEL FONT ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap');
+
+/* ── RESET ──────────────────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { image-rendering: pixelated; }
+
+/* ── GLOBAL ─────────────────────────────────────────────── */
+:root {
+  --bg:       #c94060;
+  --bg2:      #a02040;
+  --bg3:      #7a1530;
+  --stripe:   #b03050;
+  --purple:   #c060e0;
+  --purple2:  #9940c0;
+  --blue:     #4080e0;
+  --blue2:    #2060c0;
+  --pink:     #ff80b0;
+  --yellow:   #ffe040;
+  --green:    #40e080;
+  --red:      #ff3040;
+  --black:    #0a0008;
+  --white:    #fff8ff;
+  --pixel:    'Press Start 2P', monospace;
+  --vt:       'VT323', monospace;
+}
+
+body {
+  font-family: var(--pixel);
+  background-color: var(--bg);
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(0,0,0,.06) 3px,
+      rgba(0,0,0,.06) 4px
+    );
+  color: var(--black);
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+/* scanlines overlay */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 999;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0,0,0,.03) 0px,
+    rgba(0,0,0,.03) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+}
+
+/* ── WRAP ────────────────────────────────────────────────── */
+.wrap {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 16px 60px;
+}
+
+/* ── HEADER STRIPE ───────────────────────────────────────── */
+.header-stripe {
+  background: var(--bg2);
+  border-bottom: 6px solid var(--bg3);
+  padding: 28px 20px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.header-stripe::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 40%, rgba(255,180,180,.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.title-main {
+  font-family: var(--pixel);
+  font-size: clamp(1rem, 3.5vw, 1.6rem);
+  color: var(--black);
+  line-height: 1.7;
+  text-shadow: 3px 3px 0 rgba(0,0,0,.25);
+  position: relative; z-index: 1;
+  letter-spacing: 1px;
+}
+.title-main span { display: block; }
+
+/* blinking cursor after title */
+.blink {
+  display: inline-block;
+  animation: blink .85s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ── DARK SEPARATOR ──────────────────────────────────────── */
+.sep {
+  height: 22px;
+  background: var(--bg3);
+  border-top: 4px solid rgba(0,0,0,.25);
+  border-bottom: 4px solid rgba(0,0,0,.25);
+  margin: 0;
+}
+
+/* ── SECTION BLOCKS ──────────────────────────────────────── */
+.section {
+  padding: 20px 0 10px;
+}
+
+/* ── PIXEL LABEL ─────────────────────────────────────────── */
+.px-label {
+  font-family: var(--pixel);
+  font-size: .55rem;
+  color: var(--black);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  opacity: .7;
+}
+
+/* ── PIXEL BUTTON BASE ───────────────────────────────────── */
+.px-btn {
+  font-family: var(--pixel);
+  font-size: .65rem;
+  letter-spacing: 1px;
+  border: none;
+  cursor: pointer;
+  padding: 10px 18px;
+  position: relative;
+  display: inline-block;
+  transition: transform .08s;
+  text-transform: uppercase;
+  image-rendering: pixelated;
+}
+.px-btn:active { transform: translate(3px, 3px); }
+
+/* 3D pixel shadow — top left highlight, bottom right shadow */
+.px-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow:
+    inset -3px -3px 0 rgba(0,0,0,.35),
+    inset 3px 3px 0 rgba(255,255,255,.35);
+  pointer-events: none;
+}
+
+.btn-blue {
+  background: var(--blue);
+  color: var(--white);
+  box-shadow: 4px 4px 0 var(--blue2);
+}
+.btn-blue:hover { background: #5090f0; }
+.btn-blue:active { box-shadow: 1px 1px 0 var(--blue2); }
+
+.btn-purple {
+  background: var(--purple);
+  color: var(--white);
+  box-shadow: 4px 4px 0 var(--purple2);
+  font-size: .7rem;
+  padding: 12px 28px;
+}
+.btn-purple:hover { background: #d070f0; }
+.btn-purple:active { box-shadow: 1px 1px 0 var(--purple2); }
+
+.btn-red {
+  background: var(--red);
+  color: var(--white);
+  box-shadow: 4px 4px 0 #aa0020;
+}
+.btn-red:hover { background: #ff5060; }
+
+.btn-green {
+  background: var(--green);
+  color: var(--black);
+  box-shadow: 4px 4px 0 #20a050;
+}
+
+.btn-yellow {
+  background: var(--yellow);
+  color: var(--black);
+  box-shadow: 4px 4px 0 #b09000;
+}
+
+/* ── SESSION PANEL ───────────────────────────────────────── */
+.session-panel {
+  background: var(--bg2);
+  border: 4px solid var(--bg3);
+  padding: 16px;
+  margin-bottom: 16px;
+  position: relative;
+}
+/* pixel corner decoration */
+.session-panel::before,
+.session-panel::after {
+  content: '■';
+  position: absolute;
+  font-size: .5rem;
+  color: var(--bg3);
+  top: 4px;
+}
+.session-panel::before { left: 6px; }
+.session-panel::after  { right: 6px; }
+
+.conn-row {
+  display: flex; align-items: center; gap: 10px;
+  flex-wrap: wrap; margin-bottom: 12px;
+}
+
+.conn-light {
+  width: 12px; height: 12px;
+  background: #555;
+  box-shadow: inset -2px -2px 0 rgba(0,0,0,.4), inset 2px 2px 0 rgba(255,255,255,.3);
+  flex-shrink: 0;
+  transition: background .4s;
+}
+.conn-light.on {
+  background: var(--green);
+  animation: ledPulse 2s ease-in-out infinite;
+}
+@keyframes ledPulse { 0%,100%{box-shadow:0 0 6px var(--green), inset -2px -2px 0 rgba(0,0,0,.4)} 50%{box-shadow:0 0 16px var(--green), inset -2px -2px 0 rgba(0,0,0,.4)} }
+
+.conn-label {
+  font-family: var(--pixel);
+  font-size: .5rem;
+  color: var(--white);
+  flex: 1;
+  line-height: 1.6;
+}
+
+/* ID display — like a CRT readout */
+.id-display {
+  background: #0a0008;
+  border: 3px solid #333;
+  padding: 8px 12px;
+  font-family: var(--vt);
+  font-size: 1.2rem;
+  color: var(--green);
+  letter-spacing: 3px;
+  cursor: pointer;
+  display: inline-block;
+  min-width: 200px;
+  text-shadow: 0 0 8px var(--green);
+  box-shadow: inset 0 0 12px rgba(0,200,80,.15);
+  transition: text-shadow .2s;
+  user-select: all;
+  word-break: break-all;
+}
+.id-display:hover { text-shadow: 0 0 16px var(--green), 0 0 30px var(--green); }
+.id-display small {
+  display: block; font-size: .75rem;
+  color: rgba(64,224,128,.5); margin-bottom: 3px; letter-spacing: 1px;
+}
+
+/* join row */
+.join-row {
+  display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; align-items: flex-end;
+}
+
+.px-input {
+  background: #0a0008;
+  border: 3px solid #555;
+  padding: 8px 10px;
+  font-family: var(--vt);
+  font-size: 1.1rem;
+  color: var(--pink);
+  letter-spacing: 2px;
+  outline: none;
+  flex: 1; min-width: 150px;
+  transition: border-color .2s;
+  caret-color: var(--pink);
+}
+.px-input:focus { border-color: var(--pink); }
+.px-input::placeholder { color: rgba(255,128,176,.3); }
+
+/* peers chips */
+.peers-row {
+  display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px;
+  min-height: 14px;
+}
+.peer-chip {
+  background: #0a0008;
+  border: 2px solid var(--green);
+  padding: 3px 8px;
+  font-family: var(--vt);
+  font-size: .9rem;
+  color: var(--green);
+  letter-spacing: 1px;
+  display: flex; align-items: center; gap: 5px;
+}
+.peer-chip::before { content: '▶'; font-size: .5rem; }
+
+/* ── PLAYER BLOCK ────────────────────────────────────────── */
+.player-block {
+  background: var(--bg2);
+  border: 4px solid var(--bg3);
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.player-top {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+}
+
+.player-icon {
+  font-size: 2rem;
+  width: 52px; height: 52px;
+  background: #0a0008;
+  border: 3px solid #333;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: transform .15s;
+}
+.player-block.playing .player-icon { animation: iconWiggle .6s ease infinite alternate; }
+@keyframes iconWiggle { from{transform:scale(1) rotate(-8deg)} to{transform:scale(1.2) rotate(8deg)} }
+
+.player-text { flex: 1; min-width: 0; }
+.player-name {
+  font-family: var(--pixel);
+  font-size: .7rem;
+  color: var(--white);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  margin-bottom: 4px;
+  text-shadow: 2px 2px 0 rgba(0,0,0,.4);
+}
+.player-status {
+  font-family: var(--vt);
+  font-size: 1rem;
+  color: var(--pink);
+  letter-spacing: 2px;
+}
+.player-dj {
+  font-family: var(--vt);
+  font-size: .85rem;
+  color: var(--yellow);
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+/* Progress bar — pixelated */
+.prog-wrap { margin-bottom: 10px; }
+.prog-bar {
+  height: 14px;
+  background: #0a0008;
+  border: 3px solid #333;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.prog-fill {
+  height: 100%; width: 0%;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--yellow) 0px, var(--yellow) 6px,
+    #b09000 6px, #b09000 8px
+  );
+  pointer-events: none;
+  transition: width .12s linear;
+}
+.time-row {
+  display: flex; justify-content: space-between;
+  font-family: var(--vt); font-size: .85rem;
+  color: var(--pink); margin-top: 4px; letter-spacing: 2px;
+}
+
+.player-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* EQ pixel bars */
+.eq-wrap {
+  display: flex; gap: 3px; align-items: flex-end;
+  height: 24px; margin-left: auto; flex-shrink: 0;
+  opacity: 0; transition: opacity .3s;
+}
+.player-block.playing .eq-wrap { opacity: 1; }
+.eq-bar {
+  width: 5px;
+  background: var(--green);
+  box-shadow: 0 0 4px var(--green);
+  animation: pixelEq var(--s, .5s) steps(4) infinite alternate;
+  min-height: 4px;
+}
+@keyframes pixelEq { from{height:4px} to{height:22px} }
+
+/* ── RANDOM BUTTON (big purple) ──────────────────────────── */
+.btn-randomize {
+  font-family: var(--pixel);
+  font-size: .75rem;
+  letter-spacing: 1px;
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto 16px;
+  padding: 14px 20px;
+  background: var(--blue);
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  box-shadow: 5px 5px 0 var(--blue2);
+  text-align: center;
+  text-transform: uppercase;
+  transition: transform .08s;
+  position: relative;
+}
+.btn-randomize::after {
+  content: '';
+  position: absolute; inset: 0;
+  box-shadow: inset -3px -3px 0 rgba(0,0,0,.3), inset 3px 3px 0 rgba(255,255,255,.25);
+  pointer-events: none;
+}
+.btn-randomize:hover { background: #5090f0; }
+.btn-randomize:active { transform: translate(4px,4px); box-shadow: 1px 1px 0 var(--blue2); }
+
+/* ── DROP ZONE ───────────────────────────────────────────── */
+.drop-zone {
+  background: var(--purple);
+  border: 4px solid var(--purple2);
+  padding: 22px 16px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  margin-bottom: 16px;
+  transition: background .2s;
+  box-shadow: 5px 5px 0 var(--purple2);
+}
+.drop-zone:hover, .drop-zone.over { background: #d070f0; }
+.drop-zone:active { transform: translate(4px,4px); box-shadow: 1px 1px 0 var(--purple2); }
+.drop-zone input[type=file] {
+  position: absolute; inset: 0;
+  opacity: 0; cursor: pointer; width: 100%; height: 100%;
+}
+.drop-label {
+  font-family: var(--pixel);
+  font-size: clamp(.7rem, 2.5vw, 1rem);
+  color: var(--black);
+  text-shadow: 2px 2px 0 rgba(255,255,255,.3);
+  display: block; margin-bottom: 6px;
+}
+.drop-sub {
+  font-family: var(--vt);
+  font-size: 1rem;
+  color: rgba(0,0,0,.55);
+  letter-spacing: 2px;
+}
+
+/* ── ID ROW (bottom label) ───────────────────────────────── */
+.id-row {
+  font-family: var(--pixel);
+  font-size: .6rem;
+  color: var(--black);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.id-row .id-val {
+  font-family: var(--vt);
+  font-size: 1.1rem;
+  color: #0a0008;
+  background: rgba(0,0,0,.15);
+  padding: 3px 8px;
+  letter-spacing: 2px;
+}
+
+/* ── INFO BOX ────────────────────────────────────────────── */
+.info-box {
+  background: #0a0008;
+  border: 3px solid #333;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  font-family: var(--vt);
+  font-size: 1rem;
+  color: var(--green);
+  letter-spacing: 1px;
+  line-height: 1.8;
+  text-shadow: 0 0 6px rgba(64,224,128,.4);
+}
+.info-box .info-title {
+  font-family: var(--pixel);
+  font-size: .5rem;
+  color: var(--yellow);
+  display: block; margin-bottom: 6px;
+  text-shadow: 1px 1px 0 rgba(0,0,0,.5);
+}
+
+/* ── SECTION TITLE ───────────────────────────────────────── */
+.section-title {
+  font-family: var(--pixel);
+  font-size: .5rem;
+  color: var(--black);
+  opacity: .6;
+  text-align: center;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/* ── SOUND GRID ──────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px;
+  margin-bottom: 40px;
+}
+
+/* pixel card */
+.card {
+  background: var(--bg2);
+  border: 4px solid var(--bg3);
+  padding: 12px 8px;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+  transition: transform .08s;
+  user-select: none;
+  box-shadow: 4px 4px 0 rgba(0,0,0,.3);
+}
+.card:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 rgba(0,0,0,.3); }
+.card:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 rgba(0,0,0,.3); }
+.card.active {
+  border-color: var(--yellow);
+  background: var(--bg3);
+  animation: cardFlash .5s steps(2) infinite;
+}
+@keyframes cardFlash { from{background:var(--bg3)} to{background:#5a1020} }
+
+.card-del {
+  position: absolute; top: 4px; right: 4px;
+  background: var(--red);
+  border: 2px solid #aa0020;
+  color: var(--white);
+  font-family: var(--pixel);
+  font-size: .4rem;
+  width: 18px; height: 18px;
+  cursor: pointer;
+  display: none; align-items: center; justify-content: center;
+  z-index: 2;
+}
+.card:hover .card-del { display: flex; }
+.card-del:hover { background: #ff5060; }
+
+.card-emoji { font-size: 1.8rem; display: block; margin-bottom: 6px; image-rendering: auto; }
+.card.active .card-emoji { animation: spinEmoji .4s steps(4) infinite; }
+@keyframes spinEmoji { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+
+.card-name {
+  font-family: var(--pixel);
+  font-size: .5rem;
+  color: var(--white);
+  line-height: 1.5;
+  word-break: break-word;
+  text-shadow: 1px 1px 0 rgba(0,0,0,.5);
+}
+.card.active .card-name { color: var(--yellow); }
+
+.card-dur {
+  font-family: var(--vt);
+  font-size: .85rem;
+  color: rgba(255,248,255,.4);
+  margin-top: 4px;
+  letter-spacing: 1px;
+}
+
+/* ── EMPTY STATE ─────────────────────────────────────────── */
+.empty {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 40px 20px;
+  font-family: var(--pixel);
+  font-size: .55rem;
+  color: rgba(0,0,0,.35);
+  line-height: 2;
+}
+.empty .empty-icon { font-size: 3rem; display: block; margin-bottom: 12px; }
+
+/* ── TOAST ───────────────────────────────────────────────── */
+#toast {
+  position: fixed; top: 14px; left: 50%; transform: translateX(-50%);
+  background: #0a0008;
+  border: 3px solid var(--yellow);
+  padding: 10px 20px;
+  font-family: var(--pixel);
+  font-size: .55rem;
+  color: var(--yellow);
+  letter-spacing: 1px;
+  z-index: 9999;
+  text-shadow: 0 0 8px var(--yellow);
+  box-shadow: 4px 4px 0 rgba(0,0,0,.5);
+  opacity: 0; transition: opacity .25s;
+  pointer-events: none; white-space: nowrap;
+  max-width: 90vw; overflow: hidden; text-overflow: ellipsis;
+}
+#toast.show { opacity: 1; }
+
+/* ── PARTICLES ───────────────────────────────────────────── */
+@keyframes pixelBurst {
+  0%   { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+}
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+footer {
+  text-align: center;
+  padding: 16px;
+  font-family: var(--pixel);
+  font-size: .4rem;
+  color: rgba(0,0,0,.35);
+  letter-spacing: 1px;
+}
+
+/* ── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width:520px) {
+  .grid { grid-template-columns: repeat(auto-fill, minmax(120px,1fr)); }
+  .prog-wrap { display: none; }
+  .player-top { gap: 8px; }
+}
+</style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<div class="wrap">
+
+  <!-- ── HEADER ── -->
+  <div class="header-stripe">
+    <div class="title-main">
+      <span>La superbe soundboard</span>
+      <span>de Xenon<span class="blink">_</span></span>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- ── SESSION ── -->
+  <div class="section">
+    <div class="session-panel">
+      <div class="conn-row">
+        <div class="conn-light" id="connLight"></div>
+        <div class="conn-label" id="connLabel">CONNEXION EN COURS...</div>
+      </div>
+
+      <div class="px-label">► Ton ID de session</div>
+      <div class="id-display" id="myIdDisplay" title="Clique pour copier">
+        <small>SESSION ID</small>
+        <span id="myIdText">...</span>
+      </div>
+      &nbsp;
+      <button class="px-btn btn-blue" id="btnCopy">COPIER</button>
+      <button class="px-btn btn-yellow" id="btnLink" style="margin-left:6px">LIEN</button>
+
+      <div class="join-row">
+        <input class="px-input" id="joinInput" type="text" placeholder="ID AMI..." autocomplete="off" spellcheck="false">
+        <button class="px-btn btn-green" id="btnJoin">REJOINDRE</button>
+        <button class="px-btn btn-red" id="btnLeave" style="display:none">QUITTER</button>
+      </div>
+
+      <div class="peers-row" id="peersList"></div>
+    </div>
+  </div>
+
+  <!-- ── PLAYER ── -->
+  <div class="player-block" id="playerBlock">
+    <div class="player-top">
+      <div class="player-icon" id="playerIcon">🎵</div>
+      <div class="player-text">
+        <div class="player-name" id="playerName">AUCUN SON</div>
+        <div class="player-status" id="playerStatus">PRET</div>
+        <div class="player-dj" id="playerDj" style="display:none"></div>
+      </div>
+      <div class="eq-wrap">
+        <div class="eq-bar" style="--s:.52s"></div>
+        <div class="eq-bar" style="--s:.37s"></div>
+        <div class="eq-bar" style="--s:.68s"></div>
+        <div class="eq-bar" style="--s:.44s"></div>
+        <div class="eq-bar" style="--s:.6s"></div>
+      </div>
+    </div>
+
+    <div class="prog-wrap">
+      <div class="prog-bar" id="progBar">
+        <div class="prog-fill" id="progFill"></div>
+      </div>
+      <div class="time-row">
+        <span id="timeCur">0:00</span>
+        <span id="timeTot">0:00</span>
+      </div>
+    </div>
+
+    <div class="player-btns">
+      <button class="px-btn btn-green" id="btnPP">▶ PLAY</button>
+      <button class="px-btn btn-red"   id="btnStop">■ STOP</button>
+    </div>
+  </div>
+
+  <!-- ── RANDOMIZE ── -->
+  <button class="btn-randomize" id="btnRandom">★ RANDOMIZE ★</button>
+
+  <!-- ── DROP ZONE ── -->
+  <div class="drop-zone" id="dropZone">
+    <input type="file" id="fileInput" accept="audio/*" multiple>
+    <span class="drop-label">Glisse ton son</span>
+    <span class="drop-sub">MP3 • OGG • WAV • M4A</span>
+  </div>
+
+  <!-- ── ID ROW (bottom style like screenshot) ── -->
+  <div class="id-row">
+    <span>Ton id:</span>
+    <span class="id-val" id="idRowVal">...</span>
+  </div>
+
+  <!-- ── INFO ── -->
+  <div class="info-box">
+    <span class="info-title">► COMMENT JOUER EN MULTI ?</span>
+    Copie ton ID > envoie-le a un ami > il colle l'ID et clique REJOINDRE.
+    Chacun importe les memes MP3. Quand tu lances un son,
+    tout le monde sync en temps reel via P2P (PeerJS).
+    Ou utilise le bouton LIEN pour un lien direct.
+  </div>
+
+  <!-- ── GRID ── -->
+  <p class="section-title" id="sectionTitle">[ AUCUN SON AJOUTE ]</p>
+  <div class="grid" id="grid">
+    <div class="empty">
+      <span class="empty-icon">🎵</span>
+      GLISSE DES MP3<br>POUR COMMENCER !
+    </div>
+  </div>
+
+</div>
+
+<footer>LA SUPERBE SOUNDBOARD DE XENON • P2P PEERJS • FICHIERS LOCAUX</footer>
+
+<script>
+/* ════════════════════════════════════════════════
+   CONFIG
+════════════════════════════════════════════════ */
+const EMOJIS = ['🎵','🎶','⭐','🌙','⚔️','🔮','🐱','👻','🌟','🌊','🏆','🌸','⚡','🎪','🌈','🎯','🎭','🥁','🎺','🎸'];
+const NICK = 'Xenon#' + (Math.random()*9000+1000|0);
+const fmt = t => { if(!t||isNaN(t)||t===Infinity) return '0:00'; return `${Math.floor(t/60)}:${String(Math.floor(t%60)).padStart(2,'0')}`; };
+const randFrom = a => a[Math.floor(Math.random()*a.length)];
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+/* state */
+let sounds = [];
+let audio = null, curName = null, playing = false, syncing = false;
+
+/* peer */
+let peer = null;
+const conns = new Map();
+
+/* ════════════════════════════════════════════════
+   TOAST
+════════════════════════════════════════════════ */
+let toastT = null;
+function toast(msg, dur=2600) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => el.classList.remove('show'), dur);
+}
+
+/* ════════════════════════════════════════════════
+   PIXEL PARTICLES
+════════════════════════════════════════════════ */
+function burst(el) {
+  if (!el) return;
+  const r = el.getBoundingClientRect();
+  const cx = r.left + r.width/2, cy = r.top + r.height/2;
+  const cols = ['#ffe040','#ff6b9d','#4fc3f7','#40e080','#c060e0','#ff3040'];
+  for (let i=0;i<12;i++) {
+    const p = document.createElement('div');
+    const angle=(i/12)*Math.PI*2, dist=45+Math.random()*55;
+    // pixel squares, not circles
+    Object.assign(p.style, {
+      position:'fixed', left:cx+'px', top:cy+'px',
+      width:(6+Math.random()*6)+'px', height:(6+Math.random()*6)+'px',
+      background:cols[i%cols.length],
+      zIndex:9998, pointerEvents:'none',
+      imageRendering:'pixelated',
+      '--tx':(Math.cos(angle)*dist)+'px',
+      '--ty':(Math.sin(angle)*dist)+'px',
+      animation:'pixelBurst .7s steps(6) forwards',
+    });
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),750);
+  }
+}
+
+/* ════════════════════════════════════════════════
+   PEERJS
+════════════════════════════════════════════════ */
+function initPeer() {
+  peer = new Peer({ debug: 0 });
+
+  peer.on('open', id => {
+    document.getElementById('myIdText').textContent = id;
+    document.getElementById('idRowVal').textContent = id;
+    document.getElementById('connLight').classList.add('on');
+    document.getElementById('connLabel').textContent = 'EN LIGNE • ' + NICK;
+    toast('CONNECTE ! ID: ' + id);
+  });
+
+  peer.on('error', err => {
+    document.getElementById('connLight').classList.remove('on');
+    document.getElementById('connLabel').textContent = 'ERREUR: ' + err.type;
+    toast('ERREUR PEER: ' + err.type);
+    if (err.type === 'unavailable-id') setTimeout(()=>{ peer.destroy(); initPeer(); }, 1500);
+  });
+
+  peer.on('disconnected', () => {
+    document.getElementById('connLight').classList.remove('on');
+    document.getElementById('connLabel').textContent = 'DECONNECTE';
+  });
+
+  peer.on('connection', conn => setupConn(conn));
+}
+
+function setupConn(conn) {
+  conn.on('open', () => {
+    conns.set(conn.peer, conn);
+    updatePeers();
+    toast('>> ' + (conn.metadata?.nick ?? conn.peer.slice(0,8)) + ' A REJOINT !');
+    // Sync state to newcomer
+    if (curName && audio) {
+      conn.send({ type:'sync', name:curName, position:audio.currentTime, playing:playing, ts:Date.now(), nick:NICK });
+    }
+  });
+  conn.on('data', d => handleMsg(d, conn.peer));
+  conn.on('close', () => { conns.delete(conn.peer); updatePeers(); toast('<< UN AMI A QUITTE'); });
+  conn.on('error', () => { conns.delete(conn.peer); updatePeers(); });
+}
+
+function broadcast(msg, except) {
+  conns.forEach((c,id) => { if(id!==except) try{c.send(msg);}catch{} });
+}
+
+function updatePeers() {
+  const el = document.getElementById('peersList');
+  el.innerHTML = '';
+  if (!conns.size) {
+    el.innerHTML = '<span style="font-family:var(--vt);font-size:.9rem;color:rgba(0,0,0,.4);letter-spacing:1px">AUCUN AMI CONNECTE</span>';
+    return;
+  }
+  conns.forEach((c,id) => {
+    const chip = document.createElement('div');
+    chip.className = 'peer-chip';
+    chip.textContent = c.metadata?.nick ?? id.slice(0,10);
+    el.appendChild(chip);
+  });
+}
+
+/* ════════════════════════════════════════════════
+   MESSAGE HANDLER
+════════════════════════════════════════════════ */
+function handleMsg(d, from) {
+  if (!d?.type) return;
+  switch(d.type) {
+    case 'play': {
+      const s = sounds.find(x=>x.name===d.name);
+      if (!s) { toast('SON MANQUANT: '+d.name); return; }
+      broadcast(d, from);
+      syncing = true;
+      _playLocal(s, d.position??0, true, d.nick??from.slice(0,8));
+      syncing = false;
+      break;
+    }
+    case 'pause': {
+      broadcast(d, from); syncing=true;
+      if(audio && !audio.paused){ audio.pause(); setPlayUI(false); }
+      syncing=false; break;
+    }
+    case 'resume': {
+      broadcast(d, from); syncing=true;
+      if(audio && audio.paused){
+        const elapsed=(Date.now()-(d.ts??Date.now()))/1000;
+        const target=(d.position??audio.currentTime)+elapsed;
+        if(Math.abs(audio.currentTime-target)>1.5) audio.currentTime=Math.max(0,target);
+        audio.play().catch(()=>{});
+        setPlayUI(true);
+      }
+      syncing=false; break;
+    }
+    case 'stop': {
+      broadcast(d,from); syncing=true; _stopLocal(); syncing=false; break;
+    }
+    case 'seek': {
+      broadcast(d,from); syncing=true;
+      if(audio && curName===d.name) audio.currentTime=d.position??0;
+      syncing=false; break;
+    }
+    case 'sync': {
+      const s=sounds.find(x=>x.name===d.name); if(!s) return;
+      const elapsed=(Date.now()-(d.ts??Date.now()))/1000;
+      _playLocal(s,(d.position??0)+(d.playing?elapsed:0),d.playing,d.nick??from.slice(0,8));
+      break;
+    }
+  }
+}
+
+/* ════════════════════════════════════════════════
+   AUDIO CORE
+════════════════════════════════════════════════ */
+function _playLocal(sound, startPos, shouldPlay, dj) {
+  if(audio){ audio.pause(); audio.src=''; audio=null; }
+
+  audio = new Audio(sound.url);
+  curName = sound.name;
+
+  audio.addEventListener('loadedmetadata', () => {
+    document.getElementById('timeTot').textContent = fmt(audio.duration);
+    audio.currentTime = Math.min(startPos??0, audio.duration||9999);
+    if(shouldPlay) audio.play().catch(()=>{});
+  });
+  audio.addEventListener('timeupdate', () => {
+    if(!audio.duration) return;
+    document.getElementById('progFill').style.width=(audio.currentTime/audio.duration*100)+'%';
+    document.getElementById('timeCur').textContent=fmt(audio.currentTime);
+  });
+  audio.addEventListener('ended', () => {
+    setPlayUI(false);
+    document.getElementById('progFill').style.width='0%';
+    document.getElementById('timeCur').textContent='0:00';
+    document.querySelectorAll('.card.active').forEach(c=>c.classList.remove('active'));
+  });
+
+  setPlayUI(shouldPlay);
+  document.getElementById('playerName').textContent=sound.name.toUpperCase();
+  document.getElementById('playerIcon').textContent=sound.emoji;
+  const djEl=document.getElementById('playerDj');
+  if(dj){ djEl.textContent='DJ: '+dj; djEl.style.display='block'; } else djEl.style.display='none';
+  document.querySelectorAll('.card').forEach(c=>c.classList.toggle('active',c.dataset.name===sound.name));
+}
+
+function _stopLocal() {
+  if(audio){ audio.pause(); audio.src=''; audio=null; }
+  curName=null; setPlayUI(false);
+  document.getElementById('progFill').style.width='0%';
+  document.getElementById('timeCur').textContent='0:00';
+  document.getElementById('timeTot').textContent='0:00';
+  document.getElementById('playerName').textContent='AUCUN SON';
+  document.getElementById('playerStatus').textContent='PRET';
+  document.getElementById('playerIcon').textContent='🎵';
+  document.getElementById('playerDj').style.display='none';
+  document.querySelectorAll('.card.active').forEach(c=>c.classList.remove('active'));
+}
+
+function setPlayUI(val) {
+  playing=val;
+  document.getElementById('playerBlock').classList.toggle('playing',val);
+  document.getElementById('btnPP').textContent = val ? '⏸ PAUSE' : '▶ PLAY';
+  document.getElementById('playerStatus').textContent = val ? '♪ EN LECTURE...' : (curName?'EN PAUSE':'PRET');
+}
+
+/* ════════════════════════════════════════════════
+   PUBLIC ACTIONS
+════════════════════════════════════════════════ */
+function playSound(sound, fromEl) {
+  if(syncing) return;
+  if(curName===sound.name && audio){
+    if(!audio.paused){
+      audio.pause(); setPlayUI(false);
+      broadcast({type:'pause',name:sound.name,nick:NICK});
+    } else {
+      const pos=audio.currentTime;
+      audio.play().catch(()=>{}); setPlayUI(true);
+      broadcast({type:'resume',name:sound.name,position:pos,ts:Date.now(),nick:NICK});
+    }
+    return;
+  }
+  _playLocal(sound,0,true,null);
+  broadcast({type:'play',name:sound.name,position:0,nick:NICK});
+  if(fromEl) burst(fromEl);
+  toast('>> '+sound.name.toUpperCase());
+}
+
+function stopAll() {
+  if(syncing) return;
+  _stopLocal();
+  broadcast({type:'stop',nick:NICK});
+}
+
+function seekTo(e) {
+  if(!audio||!audio.duration) return;
+  const r=e.currentTarget.getBoundingClientRect();
+  const pos=((e.clientX-r.left)/r.width)*audio.duration;
+  audio.currentTime=pos;
+  broadcast({type:'seek',name:curName,position:pos,nick:NICK});
+}
+
+/* ════════════════════════════════════════════════
+   FILE IMPORT
+════════════════════════════════════════════════ */
+function importFiles(files) {
+  let added=0;
+  Array.from(files).forEach(f => {
+    if(!f.type.startsWith('audio/')&&!/\.(mp3|ogg|wav|m4a|flac|aac)$/i.test(f.name)) return;
+    const url=URL.createObjectURL(f);
+    const id=Date.now()+Math.random();
+    const name=f.name.replace(/\.[^.]+$/,'').replace(/[-_]+/g,' ');
+    const sound={id,name,emoji:randFrom(EMOJIS),url,duration:null};
+    sounds.push(sound);
+    const tmp=new Audio(url);
+    tmp.addEventListener('loadedmetadata',()=>{ sound.duration=tmp.duration; const el=document.getElementById('dur-'+id); if(el) el.textContent=fmt(tmp.duration); },{once:true});
+    addCard(sound); added++;
+  });
+  if(added){ toast('+'+added+' SON'+(added>1?'S':'')+' IMPORTES'); updateTitle(); }
+}
+
+/* ════════════════════════════════════════════════
+   GRID
+════════════════════════════════════════════════ */
+function addCard(s) {
+  document.querySelector('.empty')?.remove();
+  const c=document.createElement('div');
+  c.className='card'; c.dataset.name=s.name;
+  c.innerHTML=`
+    <button class="card-del">X</button>
+    <span class="card-emoji">${s.emoji}</span>
+    <div class="card-name">${esc(s.name.toUpperCase())}</div>
+    <div class="card-dur" id="dur-${s.id}">${s.duration?fmt(s.duration):'...'}</div>
+  `;
+  c.addEventListener('click',e=>{ if(e.target.closest('.card-del')) return; playSound(s,c); });
+  c.querySelector('.card-del').addEventListener('click',e=>{ e.stopPropagation(); removeSound(s.id); });
+  document.getElementById('grid').appendChild(c);
+}
+
+function removeSound(id) {
+  const s=sounds.find(x=>x.id===id);
+  if(s&&curName===s.name) stopAll();
+  sounds=sounds.filter(x=>x.id!==id);
+  rebuildGrid(); updateTitle();
+}
+
+function rebuildGrid() {
+  const g=document.getElementById('grid');
+  g.innerHTML='';
+  if(!sounds.length){
+    g.innerHTML='<div class="empty"><span class="empty-icon">🎵</span>GLISSE DES MP3<br>POUR COMMENCER !</div>';
+    return;
+  }
+  sounds.forEach(s=>addCard(s));
+}
+
+function updateTitle() {
+  document.getElementById('sectionTitle').textContent=sounds.length
+    ?'[ '+sounds.length+' SON'+(sounds.length>1?'S':'')+' ]'
+    :'[ AUCUN SON AJOUTE ]';
+}
+
+/* ════════════════════════════════════════════════
+   EVENTS
+════════════════════════════════════════════════ */
+document.getElementById('progBar').addEventListener('click', seekTo);
+
+document.getElementById('btnPP').addEventListener('click', () => {
+  if(!audio||!curName) return;
+  if(!audio.paused){
+    audio.pause(); setPlayUI(false);
+    broadcast({type:'pause',name:curName,nick:NICK});
+  } else {
+    const pos=audio.currentTime;
+    audio.play().catch(()=>{}); setPlayUI(true);
+    broadcast({type:'resume',name:curName,position:pos,ts:Date.now(),nick:NICK});
+  }
+});
+
+document.getElementById('btnStop').addEventListener('click', stopAll);
+
+document.getElementById('btnRandom').addEventListener('click', e => {
+  if(!sounds.length){ toast('AUCUN SON !'); return; }
+  const s=randFrom(sounds);
+  playSound(s, e.currentTarget);
+});
+
+document.getElementById('btnCopy').addEventListener('click', () => {
+  const id=document.getElementById('myIdText').textContent;
+  if(id==='...') return;
+  navigator.clipboard.writeText(id).then(()=>toast('ID COPIE !')).catch(()=>prompt('TON ID:',id));
+});
+document.getElementById('myIdDisplay').addEventListener('click', () => document.getElementById('btnCopy').click());
+
+document.getElementById('btnLink').addEventListener('click', () => {
+  const id=document.getElementById('myIdText').textContent;
+  if(id==='...'){toast('PAS ENCORE CONNECTE'); return;}
+  const url=location.origin+location.pathname+'?join='+id;
+  navigator.clipboard.writeText(url).then(()=>toast('LIEN COPIE !')).catch(()=>prompt('LIEN:',url));
+});
+
+document.getElementById('btnJoin').addEventListener('click', joinSession);
+document.getElementById('joinInput').addEventListener('keydown', e=>{ if(e.key==='Enter') joinSession(); });
+
+function joinSession() {
+  const input=document.getElementById('joinInput');
+  const target=input.value.trim();
+  if(!target||!peer) return;
+  if(target===peer.id){ toast('TU NE PEUX PAS TE CONNECTER A TOI-MEME !'); return; }
+  if(conns.has(target)){ toast('DEJA CONNECTE A CET ID'); return; }
+  toast('CONNEXION A '+target+'...');
+  const conn=peer.connect(target,{metadata:{nick:NICK},reliable:true});
+  setupConn(conn);
+  input.value='';
+}
+
+document.getElementById('fileInput').addEventListener('change', e=>{ importFiles(e.target.files); e.target.value=''; });
+
+const dz=document.getElementById('dropZone');
+['dragenter','dragover'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add('over');}));
+['dragleave','drop'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove('over');}));
+dz.addEventListener('drop',e=>importFiles(e.dataTransfer.files));
+
+/* ════════════════════════════════════════════════
+   INIT
+════════════════════════════════════════════════ */
+initPeer();
+updatePeers();
+
+// Auto-join from URL
+(function() {
+  const id=new URLSearchParams(location.search).get('join');
+  if(!id) return;
+  const try_ = () => {
+    if(peer?.id){ document.getElementById('joinInput').value=id; joinSession(); }
+    else setTimeout(try_,600);
+  };
+  try_();
+})();
+</script>
+</body>
+</html>
