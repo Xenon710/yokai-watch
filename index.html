@@ -9,7 +9,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap');
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { image-rendering: pixelated; }
 
 :root {
   --bg:      #c94060;
@@ -47,180 +46,138 @@ body::before {
 
 .wrap { max-width: 820px; margin: 0 auto; padding: 0 16px 60px; }
 
-/* ── HEADER ── */
 .header-stripe {
-  background: var(--bg2);
-  border-bottom: 6px solid var(--bg3);
-  padding: 28px 20px 24px;
-  text-align: center; position: relative; overflow: hidden;
+  background: var(--bg2); border-bottom: 6px solid var(--bg3);
+  padding: 28px 20px 24px; text-align: center; position: relative; overflow: hidden;
 }
-.header-stripe::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 50% 40%, rgba(255,180,180,.18) 0%, transparent 70%);
-  pointer-events: none;
-}
-.title-main {
-  font-family: var(--pixel);
-  font-size: clamp(1rem, 3.5vw, 1.6rem);
-  color: var(--black); line-height: 1.7;
-  text-shadow: 3px 3px 0 rgba(0,0,0,.25);
-  position: relative; z-index: 1; letter-spacing: 1px;
-}
+.header-stripe::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 40%, rgba(255,180,180,.18) 0%, transparent 70%); pointer-events: none; }
+.title-main { font-family: var(--pixel); font-size: clamp(1rem, 3.5vw, 1.6rem); color: var(--black); line-height: 1.7; text-shadow: 3px 3px 0 rgba(0,0,0,.25); position: relative; z-index: 1; letter-spacing: 1px; }
 .title-main span { display: block; }
 .blink { display: inline-block; animation: blink .85s step-end infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-
 .sep { height: 22px; background: var(--bg3); border-top: 4px solid rgba(0,0,0,.25); border-bottom: 4px solid rgba(0,0,0,.25); }
-
 .section { padding: 20px 0 10px; }
 .px-label { font-family: var(--pixel); font-size: .55rem; color: var(--black); letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase; opacity: .7; }
 
-/* ── BUTTONS ── */
-.px-btn {
-  font-family: var(--pixel); font-size: .65rem; letter-spacing: 1px;
-  border: none; cursor: pointer; padding: 10px 18px;
-  position: relative; display: inline-block;
-  transition: transform .08s; text-transform: uppercase;
-}
+.px-btn { font-family: var(--pixel); font-size: .65rem; letter-spacing: 1px; border: none; cursor: pointer; padding: 10px 18px; position: relative; display: inline-block; transition: transform .08s; text-transform: uppercase; }
 .px-btn:active { transform: translate(3px,3px); }
 .px-btn::after { content: ''; position: absolute; inset: 0; box-shadow: inset -3px -3px 0 rgba(0,0,0,.35), inset 3px 3px 0 rgba(255,255,255,.35); pointer-events: none; }
-.btn-blue  { background: var(--blue);   color: var(--white); box-shadow: 4px 4px 0 var(--blue2); }
-.btn-blue:hover  { background: #5090f0; }
+.btn-blue   { background: var(--blue);   color: var(--white); box-shadow: 4px 4px 0 var(--blue2); }
+.btn-blue:hover { background: #5090f0; }
 .btn-blue:active { box-shadow: 1px 1px 0 var(--blue2); }
-.btn-purple { background: var(--purple); color: var(--white); box-shadow: 4px 4px 0 var(--purple2); font-size: .7rem; padding: 12px 28px; }
-.btn-purple:hover { background: #d070f0; }
-.btn-red   { background: var(--red);    color: var(--white); box-shadow: 4px 4px 0 #aa0020; }
+.btn-yellow { background: var(--yellow); color: var(--black); box-shadow: 4px 4px 0 #b09000; }
+.btn-green  { background: var(--green);  color: var(--black); box-shadow: 4px 4px 0 #20a050; }
+.btn-red    { background: var(--red);    color: var(--white); box-shadow: 4px 4px 0 #aa0020; }
 .btn-red:hover { background: #ff5060; }
-.btn-green { background: var(--green);  color: var(--black); box-shadow: 4px 4px 0 #20a050; }
-.btn-yellow{ background: var(--yellow); color: var(--black); box-shadow: 4px 4px 0 #b09000; }
 
-/* ── SESSION PANEL ── */
-.session-panel {
-  background: var(--bg2); border: 4px solid var(--bg3);
-  padding: 16px; margin-bottom: 16px; position: relative;
-}
-.session-panel::before, .session-panel::after { content: '■'; position: absolute; font-size: .5rem; color: var(--bg3); top: 4px; }
-.session-panel::before { left: 6px; } .session-panel::after { right: 6px; }
-.conn-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
-.conn-light { width: 12px; height: 12px; background: #555; box-shadow: inset -2px -2px 0 rgba(0,0,0,.4), inset 2px 2px 0 rgba(255,255,255,.3); flex-shrink: 0; transition: background .4s; }
-.conn-light.on { background: var(--green); animation: ledPulse 2s ease-in-out infinite; }
+/* SESSION */
+.session-panel { background: var(--bg2); border: 4px solid var(--bg3); padding: 16px; margin-bottom: 16px; position: relative; }
+.session-panel::before,.session-panel::after { content:'■'; position:absolute; font-size:.5rem; color:var(--bg3); top:4px; }
+.session-panel::before { left:6px; } .session-panel::after { right:6px; }
+.conn-row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
+.conn-light { width:12px; height:12px; background:#555; box-shadow:inset -2px -2px 0 rgba(0,0,0,.4),inset 2px 2px 0 rgba(255,255,255,.3); flex-shrink:0; transition:background .4s; }
+.conn-light.on { background:var(--green); animation:ledPulse 2s ease-in-out infinite; }
 @keyframes ledPulse { 0%,100%{box-shadow:0 0 6px var(--green),inset -2px -2px 0 rgba(0,0,0,.4)} 50%{box-shadow:0 0 16px var(--green),inset -2px -2px 0 rgba(0,0,0,.4)} }
-.conn-label { font-family: var(--pixel); font-size: .5rem; color: var(--white); flex: 1; line-height: 1.6; }
-.id-display { background: #0a0008; border: 3px solid #333; padding: 8px 12px; font-family: var(--vt); font-size: 1.2rem; color: var(--green); letter-spacing: 3px; cursor: pointer; display: inline-block; min-width: 200px; text-shadow: 0 0 8px var(--green); box-shadow: inset 0 0 12px rgba(0,200,80,.15); transition: text-shadow .2s; user-select: all; word-break: break-all; }
-.id-display:hover { text-shadow: 0 0 16px var(--green), 0 0 30px var(--green); }
-.id-display small { display: block; font-size: .75rem; color: rgba(64,224,128,.5); margin-bottom: 3px; letter-spacing: 1px; }
-.join-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; align-items: flex-end; }
-.px-input { background: #0a0008; border: 3px solid #555; padding: 8px 10px; font-family: var(--vt); font-size: 1.1rem; color: var(--pink); letter-spacing: 2px; outline: none; flex: 1; min-width: 150px; transition: border-color .2s; caret-color: var(--pink); }
-.px-input:focus { border-color: var(--pink); }
-.px-input::placeholder { color: rgba(255,128,176,.3); }
-.peers-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; min-height: 14px; }
-.peer-chip { background: #0a0008; border: 2px solid var(--green); padding: 3px 8px; font-family: var(--vt); font-size: .9rem; color: var(--green); letter-spacing: 1px; display: flex; align-items: center; gap: 5px; }
-.peer-chip::before { content: '▶'; font-size: .5rem; }
+.conn-label { font-family:var(--pixel); font-size:.5rem; color:var(--white); flex:1; line-height:1.6; }
+.id-display { background:#0a0008; border:3px solid #333; padding:8px 12px; font-family:var(--vt); font-size:1.2rem; color:var(--green); letter-spacing:3px; cursor:pointer; display:inline-block; min-width:200px; text-shadow:0 0 8px var(--green); box-shadow:inset 0 0 12px rgba(0,200,80,.15); transition:text-shadow .2s; user-select:all; word-break:break-all; }
+.id-display:hover { text-shadow:0 0 16px var(--green),0 0 30px var(--green); }
+.id-display small { display:block; font-size:.75rem; color:rgba(64,224,128,.5); margin-bottom:3px; letter-spacing:1px; }
+.join-row { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; align-items:flex-end; }
+.px-input { background:#0a0008; border:3px solid #555; padding:8px 10px; font-family:var(--vt); font-size:1.1rem; color:var(--pink); letter-spacing:2px; outline:none; flex:1; min-width:150px; transition:border-color .2s; caret-color:var(--pink); }
+.px-input:focus { border-color:var(--pink); }
+.px-input::placeholder { color:rgba(255,128,176,.3); }
+.peers-row { display:flex; gap:6px; flex-wrap:wrap; margin-top:10px; min-height:14px; }
+.peer-chip { background:#0a0008; border:2px solid var(--green); padding:3px 8px; font-family:var(--vt); font-size:.9rem; color:var(--green); letter-spacing:1px; display:flex; align-items:center; gap:5px; }
+.peer-chip::before { content:'▶'; font-size:.5rem; }
 
-/* ── TRANSFER PROGRESS ── */
-.transfer-zone {
-  background: #0a0008;
-  border: 3px solid #333;
-  padding: 10px 14px;
-  margin-top: 10px;
-  display: none;
-}
-.transfer-zone.active { display: block; }
-.transfer-title { font-family: var(--pixel); font-size: .45rem; color: var(--yellow); margin-bottom: 8px; letter-spacing: 1px; }
-.transfer-item { margin-bottom: 6px; }
-.transfer-name { font-family: var(--vt); font-size: .9rem; color: var(--white); letter-spacing: 1px; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.transfer-bar-wrap { height: 10px; background: #222; border: 2px solid #444; position: relative; overflow: hidden; }
-.transfer-bar-fill { height: 100%; background: repeating-linear-gradient(90deg, var(--green) 0px, var(--green) 5px, #20a050 5px, #20a050 7px); transition: width .15s; }
-.transfer-pct { font-family: var(--vt); font-size: .8rem; color: var(--green); margin-top: 2px; letter-spacing: 1px; }
+/* TRANSFER ZONE */
+.transfer-zone { background:#0a0008; border:3px solid var(--blue); padding:10px 14px; margin-top:10px; display:none; }
+.transfer-zone.active { display:block; }
+.transfer-title { font-family:var(--pixel); font-size:.45rem; color:var(--yellow); margin-bottom:8px; letter-spacing:1px; animation:blink .6s step-end infinite; }
+.transfer-item { margin-bottom:8px; }
+.transfer-name { font-family:var(--vt); font-size:.95rem; color:var(--white); letter-spacing:1px; margin-bottom:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.transfer-bar-wrap { height:10px; background:#222; border:2px solid #444; overflow:hidden; }
+.transfer-bar-fill { height:100%; width:0%; background:repeating-linear-gradient(90deg,var(--green) 0px,var(--green) 5px,#20a050 5px,#20a050 7px); transition:width .1s; }
+.transfer-pct { font-family:var(--vt); font-size:.8rem; color:var(--green); margin-top:2px; letter-spacing:1px; }
 
-/* ── PLAYER ── */
-.player-block { background: var(--bg2); border: 4px solid var(--bg3); padding: 16px; margin-bottom: 14px; }
-.player-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-.player-icon { font-size: 2rem; width: 52px; height: 52px; background: #0a0008; border: 3px solid #333; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.player-block.playing .player-icon { animation: iconWiggle .6s ease infinite alternate; }
+/* PLAYER */
+.player-block { background:var(--bg2); border:4px solid var(--bg3); padding:16px; margin-bottom:14px; }
+.player-top { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+.player-icon { font-size:2rem; width:52px; height:52px; background:#0a0008; border:3px solid #333; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.player-block.playing .player-icon { animation:iconWiggle .6s ease infinite alternate; }
 @keyframes iconWiggle { from{transform:scale(1) rotate(-8deg)} to{transform:scale(1.2) rotate(8deg)} }
-.player-text { flex: 1; min-width: 0; }
-.player-name { font-family: var(--pixel); font-size: .7rem; color: var(--white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; text-shadow: 2px 2px 0 rgba(0,0,0,.4); }
-.player-status { font-family: var(--vt); font-size: 1rem; color: var(--pink); letter-spacing: 2px; }
-.player-dj { font-family: var(--vt); font-size: .85rem; color: var(--yellow); letter-spacing: 1px; margin-top: 2px; }
-.prog-wrap { margin-bottom: 10px; }
-.prog-bar { height: 14px; background: #0a0008; border: 3px solid #333; cursor: pointer; position: relative; overflow: hidden; }
-.prog-fill { height: 100%; width: 0%; background: repeating-linear-gradient(90deg,var(--yellow) 0px,var(--yellow) 6px,#b09000 6px,#b09000 8px); pointer-events: none; transition: width .12s linear; }
-.time-row { display: flex; justify-content: space-between; font-family: var(--vt); font-size: .85rem; color: var(--pink); margin-top: 4px; letter-spacing: 2px; }
-.player-btns { display: flex; gap: 8px; flex-wrap: wrap; }
-.eq-wrap { display: flex; gap: 3px; align-items: flex-end; height: 24px; margin-left: auto; flex-shrink: 0; opacity: 0; transition: opacity .3s; }
-.player-block.playing .eq-wrap { opacity: 1; }
-.eq-bar { width: 5px; background: var(--green); box-shadow: 0 0 4px var(--green); animation: pixelEq var(--s,.5s) steps(4) infinite alternate; min-height: 4px; }
+.player-text { flex:1; min-width:0; }
+.player-name { font-family:var(--pixel); font-size:.7rem; color:var(--white); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:4px; text-shadow:2px 2px 0 rgba(0,0,0,.4); }
+.player-status { font-family:var(--vt); font-size:1rem; color:var(--pink); letter-spacing:2px; }
+.player-dj { font-family:var(--vt); font-size:.85rem; color:var(--yellow); letter-spacing:1px; margin-top:2px; }
+.prog-wrap { margin-bottom:10px; }
+.prog-bar { height:14px; background:#0a0008; border:3px solid #333; cursor:pointer; overflow:hidden; }
+.prog-fill { height:100%; width:0%; background:repeating-linear-gradient(90deg,var(--yellow) 0px,var(--yellow) 6px,#b09000 6px,#b09000 8px); pointer-events:none; transition:width .12s linear; }
+.time-row { display:flex; justify-content:space-between; font-family:var(--vt); font-size:.85rem; color:var(--pink); margin-top:4px; letter-spacing:2px; }
+.player-btns { display:flex; gap:8px; flex-wrap:wrap; }
+.eq-wrap { display:flex; gap:3px; align-items:flex-end; height:24px; margin-left:auto; flex-shrink:0; opacity:0; transition:opacity .3s; }
+.player-block.playing .eq-wrap { opacity:1; }
+.eq-bar { width:5px; background:var(--green); box-shadow:0 0 4px var(--green); animation:pixelEq var(--s,.5s) steps(4) infinite alternate; min-height:4px; }
 @keyframes pixelEq { from{height:4px} to{height:22px} }
 
-/* ── RANDOM ── */
-.btn-randomize { font-family: var(--pixel); font-size: .75rem; letter-spacing: 1px; display: block; width: 100%; max-width: 300px; margin: 0 auto 16px; padding: 14px 20px; background: var(--blue); color: var(--white); border: none; cursor: pointer; box-shadow: 5px 5px 0 var(--blue2); text-align: center; text-transform: uppercase; transition: transform .08s; position: relative; }
-.btn-randomize::after { content: ''; position: absolute; inset: 0; box-shadow: inset -3px -3px 0 rgba(0,0,0,.3), inset 3px 3px 0 rgba(255,255,255,.25); pointer-events: none; }
-.btn-randomize:hover { background: #5090f0; }
-.btn-randomize:active { transform: translate(4px,4px); box-shadow: 1px 1px 0 var(--blue2); }
+.btn-randomize { font-family:var(--pixel); font-size:.75rem; letter-spacing:1px; display:block; width:100%; max-width:300px; margin:0 auto 16px; padding:14px 20px; background:var(--blue); color:var(--white); border:none; cursor:pointer; box-shadow:5px 5px 0 var(--blue2); text-align:center; text-transform:uppercase; transition:transform .08s; position:relative; }
+.btn-randomize::after { content:''; position:absolute; inset:0; box-shadow:inset -3px -3px 0 rgba(0,0,0,.3),inset 3px 3px 0 rgba(255,255,255,.25); pointer-events:none; }
+.btn-randomize:hover { background:#5090f0; }
+.btn-randomize:active { transform:translate(4px,4px); box-shadow:1px 1px 0 var(--blue2); }
 
-/* ── DROP ZONE ── */
-.drop-zone { background: var(--purple); border: 4px solid var(--purple2); padding: 22px 16px; text-align: center; cursor: pointer; position: relative; margin-bottom: 16px; transition: background .2s; box-shadow: 5px 5px 0 var(--purple2); }
-.drop-zone:hover, .drop-zone.over { background: #d070f0; }
-.drop-zone:active { transform: translate(4px,4px); box-shadow: 1px 1px 0 var(--purple2); }
-.drop-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-.drop-label { font-family: var(--pixel); font-size: clamp(.7rem,2.5vw,1rem); color: var(--black); text-shadow: 2px 2px 0 rgba(255,255,255,.3); display: block; margin-bottom: 6px; }
-.drop-sub { font-family: var(--vt); font-size: 1rem; color: rgba(0,0,0,.55); letter-spacing: 2px; }
+.drop-zone { background:var(--purple); border:4px solid var(--purple2); padding:22px 16px; text-align:center; cursor:pointer; position:relative; margin-bottom:16px; transition:background .2s; box-shadow:5px 5px 0 var(--purple2); }
+.drop-zone:hover,.drop-zone.over { background:#d070f0; }
+.drop-zone:active { transform:translate(4px,4px); box-shadow:1px 1px 0 var(--purple2); }
+.drop-zone input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+.drop-label { font-family:var(--pixel); font-size:clamp(.7rem,2.5vw,1rem); color:var(--black); text-shadow:2px 2px 0 rgba(255,255,255,.3); display:block; margin-bottom:6px; }
+.drop-sub { font-family:var(--vt); font-size:1rem; color:rgba(0,0,0,.55); letter-spacing:2px; }
 
-/* ── ID ROW ── */
-.id-row { font-family: var(--pixel); font-size: .6rem; color: var(--black); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.id-row .id-val { font-family: var(--vt); font-size: 1.1rem; color: #0a0008; background: rgba(0,0,0,.15); padding: 3px 8px; letter-spacing: 2px; }
+.id-row { font-family:var(--pixel); font-size:.6rem; color:var(--black); margin-bottom:16px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.id-row .id-val { font-family:var(--vt); font-size:1.1rem; color:#0a0008; background:rgba(0,0,0,.15); padding:3px 8px; letter-spacing:2px; }
 
-/* ── INFO BOX ── */
-.info-box { background: #0a0008; border: 3px solid #333; padding: 12px 14px; margin-bottom: 16px; font-family: var(--vt); font-size: 1rem; color: var(--green); letter-spacing: 1px; line-height: 1.8; text-shadow: 0 0 6px rgba(64,224,128,.4); }
-.info-box .info-title { font-family: var(--pixel); font-size: .5rem; color: var(--yellow); display: block; margin-bottom: 6px; text-shadow: 1px 1px 0 rgba(0,0,0,.5); }
+.info-box { background:#0a0008; border:3px solid #333; padding:12px 14px; margin-bottom:16px; font-family:var(--vt); font-size:1rem; color:var(--green); letter-spacing:1px; line-height:1.8; text-shadow:0 0 6px rgba(64,224,128,.4); }
+.info-box .info-title { font-family:var(--pixel); font-size:.5rem; color:var(--yellow); display:block; margin-bottom:6px; }
 
-/* ── GRID ── */
-.section-title { font-family: var(--pixel); font-size: .5rem; color: var(--black); opacity: .6; text-align: center; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-bottom: 40px; }
-.card { background: var(--bg2); border: 4px solid var(--bg3); padding: 12px 8px; cursor: pointer; text-align: center; position: relative; transition: transform .08s; user-select: none; box-shadow: 4px 4px 0 rgba(0,0,0,.3); }
-.card:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 rgba(0,0,0,.3); }
-.card:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 rgba(0,0,0,.3); }
-.card.active { border-color: var(--yellow); background: var(--bg3); animation: cardFlash .5s steps(2) infinite; }
+.section-title { font-family:var(--pixel); font-size:.5rem; color:var(--black); opacity:.6; text-align:center; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; }
+
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:8px; margin-bottom:40px; }
+.card { background:var(--bg2); border:4px solid var(--bg3); padding:12px 8px; cursor:pointer; text-align:center; position:relative; transition:transform .08s; user-select:none; box-shadow:4px 4px 0 rgba(0,0,0,.3); }
+.card:hover { transform:translate(-2px,-2px); box-shadow:6px 6px 0 rgba(0,0,0,.3); }
+.card:active { transform:translate(2px,2px); box-shadow:1px 1px 0 rgba(0,0,0,.3); }
+.card.active { border-color:var(--yellow); background:var(--bg3); animation:cardFlash .5s steps(2) infinite; }
 @keyframes cardFlash { from{background:var(--bg3)} to{background:#5a1020} }
-.card.receiving { border-color: var(--blue); opacity: .6; }
-.card-del { position: absolute; top: 4px; right: 4px; background: var(--red); border: 2px solid #aa0020; color: var(--white); font-family: var(--pixel); font-size: .4rem; width: 18px; height: 18px; cursor: pointer; display: none; align-items: center; justify-content: center; z-index: 2; }
-.card:hover .card-del { display: flex; }
-.card-del:hover { background: #ff5060; }
-.card-emoji { font-size: 1.8rem; display: block; margin-bottom: 6px; }
-.card.active .card-emoji { animation: spinEmoji .4s steps(4) infinite; }
+.card.receiving { border-color:var(--blue); cursor:wait; }
+.card-del { position:absolute; top:4px; right:4px; background:var(--red); border:2px solid #aa0020; color:var(--white); font-family:var(--pixel); font-size:.4rem; width:18px; height:18px; cursor:pointer; display:none; align-items:center; justify-content:center; z-index:2; }
+.card:hover .card-del { display:flex; }
+.card.receiving .card-del { display:none !important; }
+.card-del:hover { background:#ff5060; }
+.card-emoji { font-size:1.8rem; display:block; margin-bottom:6px; }
+.card.active .card-emoji { animation:spinEmoji .4s steps(4) infinite; }
 @keyframes spinEmoji { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
-.card-name { font-family: var(--pixel); font-size: .5rem; color: var(--white); line-height: 1.5; word-break: break-word; text-shadow: 1px 1px 0 rgba(0,0,0,.5); }
-.card.active .card-name { color: var(--yellow); }
-.card-dur { font-family: var(--vt); font-size: .85rem; color: rgba(255,248,255,.4); margin-top: 4px; letter-spacing: 1px; }
-.card-dl { font-family: var(--vt); font-size: .8rem; color: var(--blue); margin-top: 2px; letter-spacing: 1px; }
+.card-name { font-family:var(--pixel); font-size:.5rem; color:var(--white); line-height:1.5; word-break:break-word; text-shadow:1px 1px 0 rgba(0,0,0,.5); }
+.card.active .card-name { color:var(--yellow); }
+.card-dur { font-family:var(--vt); font-size:.85rem; color:rgba(255,248,255,.4); margin-top:4px; letter-spacing:1px; }
+.card-prog-wrap { margin-top:6px; height:6px; background:#0a0008; border:2px solid #333; overflow:hidden; }
+.card-prog-fill { height:100%; width:0%; background:var(--blue); transition:width .1s; }
 
-/* progress overlay on card */
-.card-prog { position: absolute; bottom: 0; left: 0; height: 4px; background: var(--blue); transition: width .2s; }
-
-/* ── EMPTY ── */
 .empty { grid-column:1/-1; text-align:center; padding:40px 20px; font-family:var(--pixel); font-size:.55rem; color:rgba(0,0,0,.35); line-height:2; }
 .empty .empty-icon { font-size:3rem; display:block; margin-bottom:12px; }
 
-/* ── TOAST ── */
 #toast { position:fixed; top:14px; left:50%; transform:translateX(-50%); background:#0a0008; border:3px solid var(--yellow); padding:10px 20px; font-family:var(--pixel); font-size:.55rem; color:var(--yellow); letter-spacing:1px; z-index:9999; text-shadow:0 0 8px var(--yellow); box-shadow:4px 4px 0 rgba(0,0,0,.5); opacity:0; transition:opacity .25s; pointer-events:none; white-space:nowrap; max-width:90vw; overflow:hidden; text-overflow:ellipsis; }
 #toast.show { opacity:1; }
 
-/* ── PARTICLES ── */
 @keyframes pixelBurst { 0%{transform:translate(0,0) scale(1);opacity:1} 100%{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0} }
 
 footer { text-align:center; padding:16px; font-family:var(--pixel); font-size:.4rem; color:rgba(0,0,0,.35); letter-spacing:1px; }
 
 @media(max-width:520px) {
-  .grid { grid-template-columns: repeat(auto-fill, minmax(120px,1fr)); }
+  .grid { grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); }
   .prog-wrap { display:none; }
 }
 </style>
 </head>
 <body>
-
 <div id="toast"></div>
-
 <div class="wrap">
 
   <div class="header-stripe">
@@ -231,46 +188,39 @@ footer { text-align:center; padding:16px; font-family:var(--pixel); font-size:.4
   </div>
   <div class="sep"></div>
 
-  <!-- SESSION -->
   <div class="section">
     <div class="session-panel">
       <div class="conn-row">
         <div class="conn-light" id="connLight"></div>
         <div class="conn-label" id="connLabel">CONNEXION EN COURS...</div>
       </div>
-
       <div class="px-label">► Ton ID de session</div>
       <div class="id-display" id="myIdDisplay" title="Clique pour copier">
         <small>SESSION ID</small>
         <span id="myIdText">...</span>
       </div>
       &nbsp;
-      <button class="px-btn btn-blue" id="btnCopy">COPIER</button>
+      <button class="px-btn btn-blue"   id="btnCopy">COPIER</button>
       <button class="px-btn btn-yellow" id="btnLink" style="margin-left:6px">LIEN</button>
-
       <div class="join-row">
         <input class="px-input" id="joinInput" type="text" placeholder="ID AMI..." autocomplete="off" spellcheck="false">
         <button class="px-btn btn-green" id="btnJoin">REJOINDRE</button>
       </div>
-
       <div class="peers-row" id="peersList"></div>
-
-      <!-- Transfer progress -->
       <div class="transfer-zone" id="transferZone">
-        <div class="transfer-title">► ENVOI DES SONS EN COURS...</div>
+        <div class="transfer-title">► TRANSFERT EN COURS...</div>
         <div id="transferList"></div>
       </div>
     </div>
   </div>
 
-  <!-- PLAYER -->
   <div class="player-block" id="playerBlock">
     <div class="player-top">
       <div class="player-icon" id="playerIcon">🎵</div>
       <div class="player-text">
-        <div class="player-name" id="playerName">AUCUN SON</div>
+        <div class="player-name"   id="playerName">AUCUN SON</div>
         <div class="player-status" id="playerStatus">PRET</div>
-        <div class="player-dj" id="playerDj" style="display:none"></div>
+        <div class="player-dj"     id="playerDj" style="display:none"></div>
       </div>
       <div class="eq-wrap">
         <div class="eq-bar" style="--s:.52s"></div>
@@ -305,61 +255,102 @@ footer { text-align:center; padding:16px; font-family:var(--pixel); font-size:.4
 
   <div class="info-box">
     <span class="info-title">► PARTAGE AUTOMATIQUE DES SONS !</span>
-    Importe tes MP3, ils sont envoyes automatiquement a tous tes amis connectes.
-    Tes amis n'ont rien a importer - ils recoivent tout directement !
-    Connecte-toi via ID ou lien direct.
+    Importe tes MP3, ils sont envoyes directement a tes amis connectes.
+    Tes amis recoivent tout automatiquement, pas besoin d'importer !
+    Utilise le bouton LIEN pour inviter un ami en un clic.
   </div>
 
   <p class="section-title" id="sectionTitle">[ AUCUN SON AJOUTE ]</p>
   <div class="grid" id="grid">
-    <div class="empty">
-      <span class="empty-icon">🎵</span>
-      GLISSE DES MP3<br>POUR COMMENCER !
-    </div>
+    <div class="empty"><span class="empty-icon">🎵</span>GLISSE DES MP3<br>POUR COMMENCER !</div>
   </div>
 </div>
-
 <footer>LA SUPERBE SOUNDBOARD DE XENON • P2P PEERJS • TRANSFERT DIRECT</footer>
 
 <script>
-/* ══════════════════════════════════════════════════════
-   CONSTANTES
-══════════════════════════════════════════════════════ */
-const EMOJIS   = ['🎵','🎶','⭐','🌙','⚔️','🔮','🐱','👻','🌟','🌊','🏆','🌸','⚡','🎪','🌈','🎯','🎭','🥁','🎺','🎸'];
-const NICK     = 'Xenon#' + (Math.random()*9000+1000|0);
-const CHUNK_SZ = 32768; // 32KB chunks
+/* ══════════════════════════════════════════
+   HELPERS
+══════════════════════════════════════════ */
+const EMOJIS = ['🎵','🎶','⭐','🌙','⚔️','🔮','🐱','👻','🌟','🌊','🏆','🌸','⚡','🎪','🌈','🎯','🎭','🥁','🎺','🎸'];
+const NICK   = 'Xenon#' + (Math.random()*9000+1000|0);
 
 const fmt      = t => { if(!t||isNaN(t)||t===Infinity) return '0:00'; return `${Math.floor(t/60)}:${String(Math.floor(t%60)).padStart(2,'0')}`; };
 const randFrom = a => a[Math.floor(Math.random()*a.length)];
 const esc      = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
-/* ══════════════════════════════════════════════════════
-   STATE
-══════════════════════════════════════════════════════ */
-// sounds[i] = { id, name, emoji, url, duration, mimeType, fileData(ArrayBuffer) }
-let sounds   = [];
-let audio    = null;
-let curName  = null;
-let playing  = false;
-let syncing  = false;
+// ArrayBuffer → Base64 string
+function bufToB64(buf) {
+  const bytes = new Uint8Array(buf);
+  let bin = '';
+  for (let i = 0; i < bytes.byteLength; i++) bin += String.fromCharCode(bytes[i]);
+  return btoa(bin);
+}
+// Base64 string → Blob URL
+function b64ToUrl(b64, mime) {
+  const bin  = atob(b64);
+  const buf  = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+  return URL.createObjectURL(new Blob([buf], { type: mime }));
+}
 
-// incoming file assembly: { [transferId]: { name, mime, emoji, totalChunks, chunks:[], received } }
+/* ══════════════════════════════════════════
+   STATE
+══════════════════════════════════════════ */
+// sound = { id, name, emoji, url, duration, mime, b64 }
+let sounds  = [];
+let audio   = null;
+let curName = null;
+let playing = false;
+let syncing = false;
+
+// incoming chunks: transferId → { name, emoji, mime, total, parts:[], count }
 const incoming = {};
 
-// outgoing transfer tracking per peer+sound
-const transferProgress = {}; // key = `${peerId}:${soundName}`
+/* ══════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════ */
+let toastT = null;
+function toast(msg, dur=2800) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => el.classList.remove('show'), dur);
+}
 
-/* ══════════════════════════════════════════════════════
-   PEER
-══════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   PARTICLES
+══════════════════════════════════════════ */
+function burst(el) {
+  if (!el) return;
+  const r = el.getBoundingClientRect();
+  const cx = r.left+r.width/2, cy = r.top+r.height/2;
+  const cols = ['#ffe040','#ff6b9d','#4fc3f7','#40e080','#c060e0','#ff3040'];
+  for (let i=0;i<12;i++) {
+    const p = document.createElement('div');
+    const a = (i/12)*Math.PI*2, d = 45+Math.random()*55;
+    Object.assign(p.style,{
+      position:'fixed',left:cx+'px',top:cy+'px',
+      width:(6+Math.random()*6)+'px',height:(6+Math.random()*6)+'px',
+      background:cols[i%cols.length],zIndex:9998,pointerEvents:'none',
+      '--tx':(Math.cos(a)*d)+'px','--ty':(Math.sin(a)*d)+'px',
+      animation:'pixelBurst .7s steps(6) forwards',
+    });
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),750);
+  }
+}
+
+/* ══════════════════════════════════════════
+   PEERJS
+══════════════════════════════════════════ */
 let peer = null;
-const conns = new Map(); // peerId → DataConnection
+const conns = new Map();
 
 function initPeer() {
   peer = new Peer({ debug: 0 });
   peer.on('open', id => {
-    document.getElementById('myIdText').textContent  = id;
-    document.getElementById('idRowVal').textContent  = id;
+    document.getElementById('myIdText').textContent = id;
+    document.getElementById('idRowVal').textContent = id;
     document.getElementById('connLight').classList.add('on');
     document.getElementById('connLabel').textContent = 'EN LIGNE • ' + NICK;
     toast('CONNECTE ! ID: ' + id);
@@ -367,7 +358,8 @@ function initPeer() {
   peer.on('error', err => {
     document.getElementById('connLight').classList.remove('on');
     document.getElementById('connLabel').textContent = 'ERREUR: ' + err.type;
-    if (err.type === 'unavailable-id') setTimeout(() => { peer.destroy(); initPeer(); }, 1500);
+    console.error('PeerJS error:', err);
+    if (err.type==='unavailable-id') setTimeout(()=>{peer.destroy();initPeer();},1500);
   });
   peer.on('disconnected', () => {
     document.getElementById('connLight').classList.remove('on');
@@ -380,21 +372,21 @@ function setupConn(conn) {
   conn.on('open', () => {
     conns.set(conn.peer, conn);
     updatePeers();
-    toast('>> ' + (conn.metadata?.nick ?? conn.peer.slice(0,8)) + ' A REJOINT !');
-    // Send all existing sounds to the new peer
-    sounds.forEach(s => sendFileToPeer(conn, s));
-    // Sync playback state
+    toast('>> '+(conn.metadata?.nick??conn.peer.slice(0,8))+' A REJOINT !');
+    // Send all sounds to newcomer
+    sounds.forEach(s => sendSound(conn, s));
+    // Sync playback
     if (curName && audio) {
-      conn.send({ type:'sync', name:curName, position:audio.currentTime, playing, ts:Date.now(), nick:NICK });
+      conn.send({type:'sync',name:curName,position:audio.currentTime,playing,ts:Date.now(),nick:NICK});
     }
   });
-  conn.on('data', d => handleMsg(d, conn.peer));
+  conn.on('data',  d  => handleMsg(d, conn.peer));
   conn.on('close', () => { conns.delete(conn.peer); updatePeers(); toast('<< UN AMI A QUITTE'); });
-  conn.on('error', () => { conns.delete(conn.peer); updatePeers(); });
+  conn.on('error', e  => { console.error('conn err',e); conns.delete(conn.peer); updatePeers(); });
 }
 
 function broadcast(msg, except) {
-  conns.forEach((c, id) => { if (id !== except) try { c.send(msg); } catch {} });
+  conns.forEach((c,id) => { if(id!==except) try{c.send(msg);}catch(e){console.error(e);} });
 }
 
 function updatePeers() {
@@ -404,7 +396,7 @@ function updatePeers() {
     el.innerHTML = '<span style="font-family:var(--vt);font-size:.9rem;color:rgba(0,0,0,.4);letter-spacing:1px">AUCUN AMI CONNECTE</span>';
     return;
   }
-  conns.forEach((c, id) => {
+  conns.forEach((c,id) => {
     const chip = document.createElement('div');
     chip.className = 'peer-chip';
     chip.textContent = c.metadata?.nick ?? id.slice(0,10);
@@ -412,496 +404,412 @@ function updatePeers() {
   });
 }
 
-/* ══════════════════════════════════════════════════════
-   FILE TRANSFER — SEND
-══════════════════════════════════════════════════════ */
-function sendFileToPeer(conn, sound) {
-  if (!sound.fileData) return;
-  const data    = sound.fileData; // ArrayBuffer
-  const total   = Math.ceil(data.byteLength / CHUNK_SZ);
-  const tId     = sound.name + '_' + Date.now();
+/* ══════════════════════════════════════════
+   FILE TRANSFER — envoyer en chunks Base64
+══════════════════════════════════════════ */
+// On découpe le base64 en morceaux de ~16KB (string)
+const CHUNK_CHARS = 16000;
 
-  // Show transfer UI
-  showTransferProgress(sound.name, 0);
+function sendSound(conn, sound) {
+  if (!sound.b64) return;
+  const b64   = sound.b64;
+  const total = Math.ceil(b64.length / CHUNK_CHARS);
+  const tid   = sound.name;
 
-  // Send metadata first
-  conn.send({
-    type: 'file-start',
-    transferId: tId,
-    name:       sound.name,
-    emoji:      sound.emoji,
-    mime:       sound.mimeType,
-    totalChunks:total,
-    nick:       NICK,
-  });
+  showTx(sound.name, 0);
 
-  // Send chunks with small delay to avoid flooding
+  // Announce
+  conn.send({ type:'file-start', tid, name:sound.name, emoji:sound.emoji, mime:sound.mime, total, nick:NICK });
+
   let i = 0;
-  function sendChunk() {
+  function next() {
     if (i >= total) {
-      conn.send({ type:'file-end', transferId: tId, name: sound.name });
-      hideTransferProgress(sound.name);
+      conn.send({ type:'file-done', tid, name:sound.name });
+      hideTx(sound.name);
       return;
     }
-    const start = i * CHUNK_SZ;
-    const slice = data.slice(start, start + CHUNK_SZ);
-    conn.send({ type:'file-chunk', transferId: tId, index: i, chunk: slice });
-    updateTransferProgress(sound.name, Math.round(((i+1)/total)*100));
+    const chunk = b64.slice(i * CHUNK_CHARS, (i+1) * CHUNK_CHARS);
+    conn.send({ type:'file-chunk', tid, index:i, chunk });
+    updateTx(sound.name, Math.round(((i+1)/total)*100));
     i++;
-    setTimeout(sendChunk, 8); // 8ms between chunks
+    // Small delay so the browser doesn't freeze
+    setTimeout(next, 10);
   }
-  sendChunk();
+  next();
 }
 
-/* ══════════════════════════════════════════════════════
-   FILE TRANSFER — RECEIVE
-══════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   MESSAGE HANDLER
+══════════════════════════════════════════ */
 function handleMsg(d, from) {
   if (!d?.type) return;
 
-  switch (d.type) {
+  switch(d.type) {
 
-    /* ── File transfer ── */
     case 'file-start': {
-      incoming[d.transferId] = {
-        name: d.name, mime: d.mime, emoji: d.emoji,
-        totalChunks: d.totalChunks, chunks: new Array(d.totalChunks), received: 0,
-      };
-      // Add a placeholder card showing download progress
+      // Only accept if we don't already have this sound
+      if (sounds.find(s=>s.name===d.name)) return;
+      incoming[d.tid] = { name:d.name, emoji:d.emoji, mime:d.mime, total:d.total, parts:[], count:0 };
       addReceivingCard(d.name, d.emoji);
       break;
     }
+
     case 'file-chunk': {
-      const t = incoming[d.transferId];
+      const t = incoming[d.tid];
       if (!t) return;
-      t.chunks[d.index] = d.chunk;
-      t.received++;
-      const pct = Math.round((t.received / t.totalChunks) * 100);
-      updateCardProgress(t.name, pct);
+      t.parts[d.index] = d.chunk;
+      t.count++;
+      const pct = Math.round((t.count/t.total)*100);
+      updateCardProg(t.name, pct);
       break;
     }
-    case 'file-end': {
-      const t = incoming[d.transferId];
+
+    case 'file-done': {
+      const t = incoming[d.tid];
       if (!t) return;
-      // Assemble ArrayBuffer
-      const total  = t.chunks.reduce((s, c) => s + c.byteLength, 0);
-      const buf    = new Uint8Array(total);
-      let   offset = 0;
-      t.chunks.forEach(c => { buf.set(new Uint8Array(c), offset); offset += c.byteLength; });
-      const blob = new Blob([buf], { type: t.mime });
-      const url  = URL.createObjectURL(blob);
-
-      // Register sound
-      const id = Date.now() + Math.random();
-      const sound = { id, name: t.name, emoji: t.emoji, url, duration: null, mimeType: t.mime, fileData: buf.buffer };
+      // Reassemble base64
+      const b64 = t.parts.join('');
+      const url = b64ToUrl(b64, t.mime);
+      const id  = Date.now() + Math.random();
+      const sound = { id, name:t.name, emoji:t.emoji, url, duration:null, mime:t.mime, b64 };
       sounds.push(sound);
-
-      // Get duration
       const tmp = new Audio(url);
       tmp.addEventListener('loadedmetadata', () => {
         sound.duration = tmp.duration;
-        const el = document.getElementById('dur-' + id);
+        const el = document.getElementById('dur-'+id);
         if (el) el.textContent = fmt(tmp.duration);
-      }, { once: true });
-
-      // Replace placeholder card
+      }, { once:true });
       finalizeCard(t.name, sound);
-      delete incoming[d.transferId];
+      delete incoming[d.tid];
       updateTitle();
-      toast('RECU: ' + t.name.toUpperCase());
-
-      // Relay to other peers (forward the file)
-      conns.forEach((c, cid) => {
-        if (cid !== from) sendFileToPeer(c, sound);
-      });
+      toast('RECU: '+t.name.toUpperCase());
+      // Relay to any other peers
+      conns.forEach((c,cid) => { if(cid!==from) sendSound(c, sound); });
       break;
     }
 
-    /* ── Playback sync ── */
     case 'play': {
-      const s = sounds.find(x => x.name === d.name);
-      if (!s) return;
-      broadcast(d, from); syncing = true;
-      _playLocal(s, d.position ?? 0, true, d.nick ?? from.slice(0,8));
-      syncing = false;
-      break;
+      const s = sounds.find(x=>x.name===d.name);
+      if (!s) { toast('SON MANQUANT: '+d.name); return; }
+      broadcast(d, from); syncing=true;
+      _playLocal(s, d.position??0, true, d.nick??from.slice(0,8));
+      syncing=false; break;
     }
     case 'pause': {
-      broadcast(d, from); syncing = true;
-      if (audio && !audio.paused) { audio.pause(); setPlayUI(false); }
-      syncing = false; break;
+      broadcast(d,from); syncing=true;
+      if(audio&&!audio.paused){audio.pause();setPlayUI(false);}
+      syncing=false; break;
     }
     case 'resume': {
-      broadcast(d, from); syncing = true;
-      if (audio && audio.paused) {
-        const elapsed = (Date.now() - (d.ts ?? Date.now())) / 1000;
-        const target  = (d.position ?? audio.currentTime) + elapsed;
-        if (Math.abs(audio.currentTime - target) > 1.5) audio.currentTime = Math.max(0, target);
-        audio.play().catch(() => {}); setPlayUI(true);
+      broadcast(d,from); syncing=true;
+      if(audio&&audio.paused){
+        const elapsed=(Date.now()-(d.ts??Date.now()))/1000;
+        const target=(d.position??audio.currentTime)+elapsed;
+        if(Math.abs(audio.currentTime-target)>1.5) audio.currentTime=Math.max(0,target);
+        audio.play().catch(()=>{}); setPlayUI(true);
       }
-      syncing = false; break;
+      syncing=false; break;
     }
     case 'stop': {
-      broadcast(d, from); syncing = true; _stopLocal(); syncing = false; break;
+      broadcast(d,from); syncing=true; _stopLocal(); syncing=false; break;
     }
     case 'seek': {
-      broadcast(d, from); syncing = true;
-      if (audio && curName === d.name) audio.currentTime = d.position ?? 0;
-      syncing = false; break;
+      broadcast(d,from); syncing=true;
+      if(audio&&curName===d.name) audio.currentTime=d.position??0;
+      syncing=false; break;
     }
     case 'sync': {
-      const s = sounds.find(x => x.name === d.name); if (!s) return;
-      const elapsed = (Date.now() - (d.ts ?? Date.now())) / 1000;
-      _playLocal(s, (d.position ?? 0) + (d.playing ? elapsed : 0), d.playing, d.nick ?? from.slice(0,8));
+      const s=sounds.find(x=>x.name===d.name); if(!s) return;
+      const elapsed=(Date.now()-(d.ts??Date.now()))/1000;
+      _playLocal(s,(d.position??0)+(d.playing?elapsed:0),d.playing,d.nick??from.slice(0,8));
       break;
     }
   }
 }
 
-/* ══════════════════════════════════════════════════════
+/* ══════════════════════════════════════════
    TRANSFER UI
-══════════════════════════════════════════════════════ */
-const activeTransfers = new Set();
-
-function showTransferProgress(name, pct) {
-  activeTransfers.add(name);
+══════════════════════════════════════════ */
+function showTx(name, pct) {
   document.getElementById('transferZone').classList.add('active');
   const list = document.getElementById('transferList');
-  let item = document.getElementById('txitem-' + CSS.escape(name));
-  if (!item) {
-    item = document.createElement('div');
-    item.className = 'transfer-item';
-    item.id = 'txitem-' + CSS.escape(name);
-    item.innerHTML = `
-      <div class="transfer-name">${esc(name)}</div>
-      <div class="transfer-bar-wrap"><div class="transfer-bar-fill" id="txbar-${CSS.escape(name)}" style="width:0%"></div></div>
-      <div class="transfer-pct" id="txpct-${CSS.escape(name)}">0%</div>
-    `;
-    list.appendChild(item);
-  }
+  if (document.getElementById('txi-'+safeId(name))) return;
+  const item = document.createElement('div');
+  item.className='transfer-item'; item.id='txi-'+safeId(name);
+  item.innerHTML=`
+    <div class="transfer-name">${esc(name)}</div>
+    <div class="transfer-bar-wrap"><div class="transfer-bar-fill" id="txb-${safeId(name)}" style="width:0%"></div></div>
+    <div class="transfer-pct" id="txp-${safeId(name)}">0%</div>
+  `;
+  list.appendChild(item);
 }
-function updateTransferProgress(name, pct) {
-  const bar = document.getElementById('txbar-' + CSS.escape(name));
-  const pctEl = document.getElementById('txpct-' + CSS.escape(name));
-  if (bar) bar.style.width = pct + '%';
-  if (pctEl) pctEl.textContent = pct + '%';
+function updateTx(name, pct) {
+  const b=document.getElementById('txb-'+safeId(name));
+  const p=document.getElementById('txp-'+safeId(name));
+  if(b) b.style.width=pct+'%';
+  if(p) p.textContent=pct+'%';
 }
-function hideTransferProgress(name) {
-  activeTransfers.delete(name);
+function hideTx(name) {
   setTimeout(() => {
-    document.getElementById('txitem-' + CSS.escape(name))?.remove();
-    if (!activeTransfers.size) document.getElementById('transferZone').classList.remove('active');
-  }, 800);
+    document.getElementById('txi-'+safeId(name))?.remove();
+    if (!document.getElementById('transferList').children.length)
+      document.getElementById('transferZone').classList.remove('active');
+  }, 600);
 }
+const safeId = s => s.replace(/[^a-zA-Z0-9]/g,'_');
 
-/* ══════════════════════════════════════════════════════
+/* ══════════════════════════════════════════
    AUDIO CORE
-══════════════════════════════════════════════════════ */
+══════════════════════════════════════════ */
 function _playLocal(sound, startPos, shouldPlay, dj) {
-  if (audio) { audio.pause(); audio.src = ''; audio = null; }
-  audio = new Audio(sound.url);
-  curName = sound.name;
-
-  audio.addEventListener('loadedmetadata', () => {
-    document.getElementById('timeTot').textContent = fmt(audio.duration);
-    audio.currentTime = Math.min(startPos ?? 0, audio.duration || 9999);
-    if (shouldPlay) audio.play().catch(() => {});
+  if(audio){audio.pause();audio.src='';audio=null;}
+  audio=new Audio(sound.url); curName=sound.name;
+  audio.addEventListener('loadedmetadata',()=>{
+    document.getElementById('timeTot').textContent=fmt(audio.duration);
+    audio.currentTime=Math.min(startPos??0,audio.duration||9999);
+    if(shouldPlay) audio.play().catch(()=>{});
   });
-  audio.addEventListener('timeupdate', () => {
-    if (!audio.duration) return;
-    document.getElementById('progFill').style.width = (audio.currentTime / audio.duration * 100) + '%';
-    document.getElementById('timeCur').textContent  = fmt(audio.currentTime);
+  audio.addEventListener('timeupdate',()=>{
+    if(!audio.duration) return;
+    document.getElementById('progFill').style.width=(audio.currentTime/audio.duration*100)+'%';
+    document.getElementById('timeCur').textContent=fmt(audio.currentTime);
   });
-  audio.addEventListener('ended', () => {
+  audio.addEventListener('ended',()=>{
     setPlayUI(false);
-    document.getElementById('progFill').style.width = '0%';
-    document.getElementById('timeCur').textContent  = '0:00';
-    document.querySelectorAll('.card.active').forEach(c => c.classList.remove('active'));
+    document.getElementById('progFill').style.width='0%';
+    document.getElementById('timeCur').textContent='0:00';
+    document.querySelectorAll('.card.active').forEach(c=>c.classList.remove('active'));
   });
-
   setPlayUI(shouldPlay);
-  document.getElementById('playerName').textContent = sound.name.toUpperCase();
-  document.getElementById('playerIcon').textContent = sound.emoji;
-  const djEl = document.getElementById('playerDj');
-  if (dj) { djEl.textContent = 'DJ: ' + dj; djEl.style.display = 'block'; } else djEl.style.display = 'none';
-  document.querySelectorAll('.card').forEach(c => c.classList.toggle('active', c.dataset.name === sound.name));
+  document.getElementById('playerName').textContent=sound.name.toUpperCase();
+  document.getElementById('playerIcon').textContent=sound.emoji;
+  const djEl=document.getElementById('playerDj');
+  if(dj){djEl.textContent='DJ: '+dj;djEl.style.display='block';}else djEl.style.display='none';
+  document.querySelectorAll('.card').forEach(c=>c.classList.toggle('active',c.dataset.name===sound.name));
 }
 
 function _stopLocal() {
-  if (audio) { audio.pause(); audio.src = ''; audio = null; }
-  curName = null; setPlayUI(false);
-  document.getElementById('progFill').style.width = '0%';
-  document.getElementById('timeCur').textContent  = '0:00';
-  document.getElementById('timeTot').textContent  = '0:00';
-  document.getElementById('playerName').textContent = 'AUCUN SON';
-  document.getElementById('playerStatus').textContent = 'PRET';
-  document.getElementById('playerIcon').textContent = '🎵';
-  document.getElementById('playerDj').style.display = 'none';
-  document.querySelectorAll('.card.active').forEach(c => c.classList.remove('active'));
+  if(audio){audio.pause();audio.src='';audio=null;}
+  curName=null; setPlayUI(false);
+  document.getElementById('progFill').style.width='0%';
+  document.getElementById('timeCur').textContent='0:00';
+  document.getElementById('timeTot').textContent='0:00';
+  document.getElementById('playerName').textContent='AUCUN SON';
+  document.getElementById('playerStatus').textContent='PRET';
+  document.getElementById('playerIcon').textContent='🎵';
+  document.getElementById('playerDj').style.display='none';
+  document.querySelectorAll('.card.active').forEach(c=>c.classList.remove('active'));
 }
 
 function setPlayUI(val) {
-  playing = val;
-  document.getElementById('playerBlock').classList.toggle('playing', val);
-  document.getElementById('btnPP').textContent         = val ? '⏸ PAUSE' : '▶ PLAY';
-  document.getElementById('playerStatus').textContent  = val ? '♪ EN LECTURE...' : (curName ? 'EN PAUSE' : 'PRET');
+  playing=val;
+  document.getElementById('playerBlock').classList.toggle('playing',val);
+  document.getElementById('btnPP').textContent=val?'⏸ PAUSE':'▶ PLAY';
+  document.getElementById('playerStatus').textContent=val?'♪ EN LECTURE...':(curName?'EN PAUSE':'PRET');
 }
 
-/* ══════════════════════════════════════════════════════
+/* ══════════════════════════════════════════
    PUBLIC ACTIONS
-══════════════════════════════════════════════════════ */
+══════════════════════════════════════════ */
 function playSound(sound, fromEl) {
-  if (syncing) return;
-  if (curName === sound.name && audio) {
-    if (!audio.paused) {
-      audio.pause(); setPlayUI(false);
-      broadcast({ type:'pause', name:sound.name, nick:NICK });
-    } else {
-      const pos = audio.currentTime;
-      audio.play().catch(() => {}); setPlayUI(true);
-      broadcast({ type:'resume', name:sound.name, position:pos, ts:Date.now(), nick:NICK });
-    }
+  if(syncing) return;
+  if(curName===sound.name&&audio){
+    if(!audio.paused){audio.pause();setPlayUI(false);broadcast({type:'pause',name:sound.name,nick:NICK});}
+    else{const pos=audio.currentTime;audio.play().catch(()=>{});setPlayUI(true);broadcast({type:'resume',name:sound.name,position:pos,ts:Date.now(),nick:NICK});}
     return;
   }
-  _playLocal(sound, 0, true, null);
-  broadcast({ type:'play', name:sound.name, position:0, nick:NICK });
-  if (fromEl) burst(fromEl);
-  toast('>> ' + sound.name.toUpperCase());
+  _playLocal(sound,0,true,null);
+  broadcast({type:'play',name:sound.name,position:0,nick:NICK});
+  if(fromEl) burst(fromEl);
+  toast('>> '+sound.name.toUpperCase());
 }
 
 function stopAll() {
-  if (syncing) return;
+  if(syncing) return;
   _stopLocal();
-  broadcast({ type:'stop', nick:NICK });
+  broadcast({type:'stop',nick:NICK});
 }
 
 function seekTo(e) {
-  if (!audio || !audio.duration) return;
-  const r = e.currentTarget.getBoundingClientRect();
-  const pos = ((e.clientX - r.left) / r.width) * audio.duration;
-  audio.currentTime = pos;
-  broadcast({ type:'seek', name:curName, position:pos, nick:NICK });
+  if(!audio||!audio.duration) return;
+  const r=e.currentTarget.getBoundingClientRect();
+  const pos=((e.clientX-r.left)/r.width)*audio.duration;
+  audio.currentTime=pos;
+  broadcast({type:'seek',name:curName,position:pos,nick:NICK});
 }
 
-/* ══════════════════════════════════════════════════════
+/* ══════════════════════════════════════════
    FILE IMPORT
-══════════════════════════════════════════════════════ */
+══════════════════════════════════════════ */
 function importFiles(files) {
-  let added = 0;
   Array.from(files).forEach(f => {
-    if (!f.type.startsWith('audio/') && !/\.(mp3|ogg|wav|m4a|flac|aac)$/i.test(f.name)) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-      const buf  = e.target.result;
-      const url  = URL.createObjectURL(new Blob([buf], { type: f.type || 'audio/mpeg' }));
-      const id   = Date.now() + Math.random();
-      const name = f.name.replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ');
-      const sound = { id, name, emoji: randFrom(EMOJIS), url, duration: null, mimeType: f.type || 'audio/mpeg', fileData: buf };
+    if(!f.type.startsWith('audio/')&&!/\.(mp3|ogg|wav|m4a|flac|aac)$/i.test(f.name)) return;
+    const reader=new FileReader();
+    reader.onload=e=>{
+      const b64  = bufToB64(e.target.result);
+      const url  = b64ToUrl(b64, f.type||'audio/mpeg');
+      const id   = Date.now()+Math.random();
+      const name = f.name.replace(/\.[^.]+$/,'').replace(/[-_]+/g,' ');
+      const sound= {id,name,emoji:randFrom(EMOJIS),url,duration:null,mime:f.type||'audio/mpeg',b64};
       sounds.push(sound);
-      const tmp = new Audio(url);
-      tmp.addEventListener('loadedmetadata', () => {
-        sound.duration = tmp.duration;
-        const el = document.getElementById('dur-' + id);
-        if (el) el.textContent = fmt(tmp.duration);
-      }, { once: true });
+      const tmp=new Audio(url);
+      tmp.addEventListener('loadedmetadata',()=>{
+        sound.duration=tmp.duration;
+        const el=document.getElementById('dur-'+id);
+        if(el) el.textContent=fmt(tmp.duration);
+      },{once:true});
       addCard(sound);
       updateTitle();
-      // Send to all connected peers
-      conns.forEach(conn => sendFileToPeer(conn, sound));
-      toast('+1 ' + name.toUpperCase() + ' - ENVOI AUX AMIS...');
+      // Send to all peers
+      if(conns.size){
+        toast('+1 '+name.toUpperCase()+' - ENVOI EN COURS...');
+        conns.forEach(conn=>sendSound(conn,sound));
+      } else {
+        toast('+1 '+name.toUpperCase());
+      }
     };
     reader.readAsArrayBuffer(f);
-    added++;
   });
-  if (added && !conns.size) toast('+' + added + ' SON' + (added>1?'S':'') + ' IMPORTES');
 }
 
-/* ══════════════════════════════════════════════════════
+/* ══════════════════════════════════════════
    CARD DOM
-══════════════════════════════════════════════════════ */
+══════════════════════════════════════════ */
 function addCard(s) {
   document.querySelector('.empty')?.remove();
-  // Remove receiving placeholder if exists
-  document.querySelector(`[data-name="${CSS.escape(s.name)}"]`)?.remove();
-
-  const c = document.createElement('div');
-  c.className    = 'card';
-  c.dataset.name = s.name;
-  c.innerHTML = `
+  document.querySelector(`.card[data-name="${CSS.escape(s.name)}"]`)?.remove();
+  const c=document.createElement('div');
+  c.className='card'; c.dataset.name=s.name;
+  c.innerHTML=`
     <button class="card-del">X</button>
     <span class="card-emoji">${s.emoji}</span>
     <div class="card-name">${esc(s.name.toUpperCase())}</div>
-    <div class="card-dur" id="dur-${s.id}">${s.duration ? fmt(s.duration) : '...'}</div>
+    <div class="card-dur" id="dur-${s.id}">${s.duration?fmt(s.duration):'...'}</div>
   `;
-  c.addEventListener('click', e => { if (e.target.closest('.card-del')) return; playSound(s, c); });
-  c.querySelector('.card-del').addEventListener('click', e => { e.stopPropagation(); removeSound(s.id); });
+  c.addEventListener('click',e=>{if(e.target.closest('.card-del')) return; playSound(s,c);});
+  c.querySelector('.card-del').addEventListener('click',e=>{e.stopPropagation();removeSound(s.id);});
   document.getElementById('grid').appendChild(c);
 }
 
 function addReceivingCard(name, emoji) {
   document.querySelector('.empty')?.remove();
-  if (document.querySelector(`[data-name="${CSS.escape(name)}"]`)) return;
-  const c = document.createElement('div');
-  c.className    = 'card receiving';
-  c.dataset.name = name;
-  c.innerHTML = `
+  if(document.querySelector(`.card[data-name="${CSS.escape(name)}"]`)) return;
+  const c=document.createElement('div');
+  c.className='card receiving'; c.dataset.name=name;
+  c.innerHTML=`
     <span class="card-emoji">${emoji}</span>
     <div class="card-name">${esc(name.toUpperCase())}</div>
-    <div class="card-dl">RECEPTION...</div>
-    <div class="card-dur">0%</div>
-    <div class="card-prog" id="cprog-${CSS.escape(name)}" style="width:0%"></div>
+    <div class="card-dur" id="rcv-dur-${safeId(name)}">0%</div>
+    <div class="card-prog-wrap"><div class="card-prog-fill" id="rcv-prog-${safeId(name)}"></div></div>
   `;
   document.getElementById('grid').appendChild(c);
 }
 
-function updateCardProgress(name, pct) {
-  const c = document.querySelector(`[data-name="${CSS.escape(name)}"]`);
-  if (!c) return;
-  const bar = document.getElementById('cprog-' + CSS.escape(name));
-  if (bar) bar.style.width = pct + '%';
-  const dur = c.querySelector('.card-dur');
-  if (dur) dur.textContent = pct + '%';
+function updateCardProg(name, pct) {
+  const dur  = document.getElementById('rcv-dur-'+safeId(name));
+  const prog = document.getElementById('rcv-prog-'+safeId(name));
+  if(dur)  dur.textContent=pct+'%';
+  if(prog) prog.style.width=pct+'%';
 }
 
 function finalizeCard(name, sound) {
-  // Remove placeholder
-  document.querySelector(`[data-name="${CSS.escape(name)}"]`)?.remove();
+  document.querySelector(`.card[data-name="${CSS.escape(name)}"]`)?.remove();
   addCard(sound);
 }
 
 function removeSound(id) {
-  const s = sounds.find(x => x.id === id);
-  if (s && curName === s.name) stopAll();
-  sounds = sounds.filter(x => x.id !== id);
+  const s=sounds.find(x=>x.id===id);
+  if(s&&curName===s.name) stopAll();
+  sounds=sounds.filter(x=>x.id!==id);
   rebuildGrid(); updateTitle();
 }
 
 function rebuildGrid() {
-  const g = document.getElementById('grid');
-  g.innerHTML = '';
-  if (!sounds.length) {
-    g.innerHTML = '<div class="empty"><span class="empty-icon">🎵</span>GLISSE DES MP3<br>POUR COMMENCER !</div>';
+  const g=document.getElementById('grid');
+  g.innerHTML='';
+  if(!sounds.length){
+    g.innerHTML='<div class="empty"><span class="empty-icon">🎵</span>GLISSE DES MP3<br>POUR COMMENCER !</div>';
     return;
   }
-  sounds.forEach(s => addCard(s));
+  sounds.forEach(s=>addCard(s));
 }
 
 function updateTitle() {
-  document.getElementById('sectionTitle').textContent = sounds.length
-    ? '[ ' + sounds.length + ' SON' + (sounds.length > 1 ? 'S' : '') + ' ]'
-    : '[ AUCUN SON AJOUTE ]';
+  document.getElementById('sectionTitle').textContent=sounds.length
+    ?'[ '+sounds.length+' SON'+(sounds.length>1?'S':'')+' ]'
+    :'[ AUCUN SON AJOUTE ]';
 }
 
-/* ══════════════════════════════════════════════════════
-   TOAST & PARTICLES
-══════════════════════════════════════════════════════ */
-let toastT = null;
-function toast(msg, dur=2600) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  clearTimeout(toastT);
-  toastT = setTimeout(() => el.classList.remove('show'), dur);
-}
-
-function burst(el) {
-  if (!el) return;
-  const r = el.getBoundingClientRect();
-  const cx = r.left + r.width/2, cy = r.top + r.height/2;
-  const cols = ['#ffe040','#ff6b9d','#4fc3f7','#40e080','#c060e0','#ff3040'];
-  for (let i = 0; i < 12; i++) {
-    const p = document.createElement('div');
-    const angle = (i/12)*Math.PI*2, dist = 45+Math.random()*55;
-    Object.assign(p.style, {
-      position:'fixed', left:cx+'px', top:cy+'px',
-      width:(6+Math.random()*6)+'px', height:(6+Math.random()*6)+'px',
-      background:cols[i%cols.length], zIndex:9998, pointerEvents:'none',
-      imageRendering:'pixelated',
-      '--tx':(Math.cos(angle)*dist)+'px', '--ty':(Math.sin(angle)*dist)+'px',
-      animation:'pixelBurst .7s steps(6) forwards',
-    });
-    document.body.appendChild(p);
-    setTimeout(() => p.remove(), 750);
-  }
-}
-
-/* ══════════════════════════════════════════════════════
-   EVENT LISTENERS
-══════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   EVENTS
+══════════════════════════════════════════ */
 document.getElementById('progBar').addEventListener('click', seekTo);
 
-document.getElementById('btnPP').addEventListener('click', () => {
-  if (!audio || !curName) return;
-  if (!audio.paused) {
-    audio.pause(); setPlayUI(false);
-    broadcast({ type:'pause', name:curName, nick:NICK });
-  } else {
-    const pos = audio.currentTime;
-    audio.play().catch(() => {}); setPlayUI(true);
-    broadcast({ type:'resume', name:curName, position:pos, ts:Date.now(), nick:NICK });
-  }
+document.getElementById('btnPP').addEventListener('click',()=>{
+  if(!audio||!curName) return;
+  if(!audio.paused){audio.pause();setPlayUI(false);broadcast({type:'pause',name:curName,nick:NICK});}
+  else{const pos=audio.currentTime;audio.play().catch(()=>{});setPlayUI(true);broadcast({type:'resume',name:curName,position:pos,ts:Date.now(),nick:NICK});}
 });
 
 document.getElementById('btnStop').addEventListener('click', stopAll);
 
-document.getElementById('btnRandom').addEventListener('click', e => {
-  if (!sounds.length) { toast('AUCUN SON !'); return; }
-  playSound(randFrom(sounds), e.currentTarget);
+document.getElementById('btnRandom').addEventListener('click',e=>{
+  if(!sounds.length){toast('AUCUN SON !');return;}
+  playSound(randFrom(sounds),e.currentTarget);
 });
 
-document.getElementById('btnCopy').addEventListener('click', () => {
-  const id = document.getElementById('myIdText').textContent;
-  if (id === '...') return;
-  navigator.clipboard.writeText(id).then(() => toast('ID COPIE !')).catch(() => prompt('TON ID:', id));
+document.getElementById('btnCopy').addEventListener('click',()=>{
+  const id=document.getElementById('myIdText').textContent;
+  if(id==='...') return;
+  navigator.clipboard.writeText(id).then(()=>toast('ID COPIE !')).catch(()=>prompt('TON ID:',id));
 });
-document.getElementById('myIdDisplay').addEventListener('click', () => document.getElementById('btnCopy').click());
+document.getElementById('myIdDisplay').addEventListener('click',()=>document.getElementById('btnCopy').click());
 
-document.getElementById('btnLink').addEventListener('click', () => {
-  const id = document.getElementById('myIdText').textContent;
-  if (id === '...') { toast('PAS ENCORE CONNECTE'); return; }
-  const url = location.origin + location.pathname + '?join=' + id;
-  navigator.clipboard.writeText(url).then(() => toast('LIEN COPIE !')).catch(() => prompt('LIEN:', url));
+document.getElementById('btnLink').addEventListener('click',()=>{
+  const id=document.getElementById('myIdText').textContent;
+  if(id==='...'){toast('PAS ENCORE CONNECTE');return;}
+  const url=location.origin+location.pathname+'?join='+id;
+  navigator.clipboard.writeText(url).then(()=>toast('LIEN COPIE !')).catch(()=>prompt('LIEN:',url));
 });
 
 document.getElementById('btnJoin').addEventListener('click', joinSession);
-document.getElementById('joinInput').addEventListener('keydown', e => { if (e.key === 'Enter') joinSession(); });
+document.getElementById('joinInput').addEventListener('keydown',e=>{if(e.key==='Enter') joinSession();});
 
-function joinSession() {
-  const input  = document.getElementById('joinInput');
-  const target = input.value.trim();
-  if (!target || !peer) return;
-  if (target === peer.id) { toast('TU NE PEUX PAS TE CONNECTER A TOI-MEME !'); return; }
-  if (conns.has(target)) { toast('DEJA CONNECTE A CET ID'); return; }
-  toast('CONNEXION A ' + target + '...');
-  const conn = peer.connect(target, { metadata: { nick: NICK }, reliable: true });
+function joinSession(){
+  const input=document.getElementById('joinInput');
+  const target=input.value.trim();
+  if(!target||!peer) return;
+  if(target===peer.id){toast('TU NE PEUX PAS TE CONNECTER A TOI-MEME !');return;}
+  if(conns.has(target)){toast('DEJA CONNECTE A CET ID');return;}
+  toast('CONNEXION A '+target+'...');
+  const conn=peer.connect(target,{metadata:{nick:NICK},reliable:true,serialization:'json'});
   setupConn(conn);
-  input.value = '';
+  input.value='';
 }
 
-document.getElementById('fileInput').addEventListener('change', e => { importFiles(e.target.files); e.target.value = ''; });
+document.getElementById('fileInput').addEventListener('change',e=>{importFiles(e.target.files);e.target.value='';});
 
-const dz = document.getElementById('dropZone');
-['dragenter','dragover'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add('over'); }));
-['dragleave','drop'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove('over'); }));
-dz.addEventListener('drop', e => importFiles(e.dataTransfer.files));
+const dz=document.getElementById('dropZone');
+['dragenter','dragover'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add('over');}));
+['dragleave','drop'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove('over');}));
+dz.addEventListener('drop',e=>importFiles(e.dataTransfer.files));
 
-/* ══════════════════════════════════════════════════════
+/* ══════════════════════════════════════════
    INIT
-══════════════════════════════════════════════════════ */
+══════════════════════════════════════════ */
 initPeer();
 updatePeers();
 
-// Auto-join from URL ?join=ID
-(function() {
-  const id = new URLSearchParams(location.search).get('join');
-  if (!id) return;
-  const try_ = () => {
-    if (peer?.id) { document.getElementById('joinInput').value = id; joinSession(); }
-    else setTimeout(try_, 600);
+// Auto-join from ?join=ID
+(()=>{
+  const id=new URLSearchParams(location.search).get('join');
+  if(!id) return;
+  const try_=()=>{
+    if(peer?.id){document.getElementById('joinInput').value=id;joinSession();}
+    else setTimeout(try_,600);
   };
   try_();
 })();
 </script>
 </body>
 </html>
-
